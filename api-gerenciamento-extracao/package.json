@@ -2,15 +2,12 @@
   "name": "api-gerenciamento-extracao",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "dev": "ts-node-dev --respawn src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "migration:run": "npm run typeorm migration:run -d ./src/database/data-source.ts",
-    "migration:generate": "npm run typeorm migration:generate -n NewMigration -d ./src/database/data-source.ts",
-    "migration:revert": "npm run typeorm migration:revert -d ./src/database/data-source.ts"
-  },
+"scripts": {
+  "dev": "ts-node-dev --respawn src/server.ts",
+  "build": "tsc",
+  "start": "node dist/server.js",
+  "typeorm": "ts-node ./node_modules/typeorm/cli"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
