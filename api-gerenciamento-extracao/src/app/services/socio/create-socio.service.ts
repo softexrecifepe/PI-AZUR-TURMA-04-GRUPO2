@@ -22,7 +22,6 @@ export class CreateSocioService {
 
         const socioCreate = await new SocioRepository().create(socio);
     
-
         return socioCreate;
     }
 }
