@@ -4,7 +4,7 @@ export class DuplicateEntryError extends Error {
     constructor(message: string) {
       super(message);
       this.name = 'DuplicateEntryError';
-      this.statusCode = 409; // 409 Conflict - HTTP status apropriado para conflitos como duplicações
+      this.statusCode = 409;
     }
   }
   

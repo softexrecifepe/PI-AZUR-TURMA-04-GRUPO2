@@ -26,7 +26,7 @@ export function responseError(
   if (error instanceof DuplicateEntryError) {
     return response.status(error.statusCode).json({
       status: 'error',
-      message: error.message, // "Email já registrado"
+      message: error.message,
     });
   }
 

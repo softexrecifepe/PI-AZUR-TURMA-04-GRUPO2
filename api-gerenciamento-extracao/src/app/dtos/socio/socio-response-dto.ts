@@ -1,6 +1,6 @@
 import { EstadoCivil } from "../../models/enums/estadoCivil.enum";
 
-export type UpdateSocioResponseDto = {
+export type SocioResponseDto = {
     id: number;
     nome: string;
     nacionalidade: string;

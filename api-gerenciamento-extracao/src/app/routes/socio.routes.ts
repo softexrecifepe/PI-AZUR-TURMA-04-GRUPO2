@@ -1,12 +1,10 @@
 import { Router } from 'express';
-import { CreateSocioController } from '../controllers/socio/create-socio.controller';
-import { UpdateSocioController } from '../controllers/socio/update-socio.controller';
+import { SocioController } from '../controllers/socio/socio.controller';
 
 const socioRoutes = Router();
-const createSocioController = new CreateSocioController();
-const updateSocioController = new UpdateSocioController();
+const socioController = new SocioController();
 
-socioRoutes.post('/socio', createSocioController.createSocio.bind(createSocioController));
-socioRoutes.patch('/socio/:id', updateSocioController.updateSocio.bind(updateSocioController));
+socioRoutes.post('/socio', socioController.create.bind(socioController));
+socioRoutes.patch('/socio/:id', socioController.update.bind(socioController));
 
 export default socioRoutes;

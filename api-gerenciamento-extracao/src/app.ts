@@ -21,8 +21,5 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     responseError(error, req, res, next)
 });
 
-// app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-//     res.status(500).send(error.message);
-// })
  
 export default app;

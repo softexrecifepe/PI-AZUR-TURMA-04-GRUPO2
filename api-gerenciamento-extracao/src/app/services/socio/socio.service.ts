@@ -1,12 +1,18 @@
 import { CreateSocioRequestDto } from "../../dtos/socio/create-socio-request-dto";
-import { CreateSocioResponseDto } from "../../dtos/socio/create-socio-response-dto";
+import { UpdateSocioRequestDto } from "../../dtos/socio/update-socio-request-dto";
 import { Socio } from "../../models/socio.model";
 import { SocioRepository } from "../../repositories/socio.repository";
 
-export class CreateSocioService {
-    async execute(socioData: CreateSocioRequestDto){
-        const data = socioData.getAll();
+export class SocioService {
+    private repository: SocioRepository;
 
+    constructor() {
+        this.repository = new SocioRepository();
+    }
+
+    async create(dto: CreateSocioRequestDto) {
+        const data  = dto.getAll();
+        
         const socio = new Socio();
         socio.nome = data.nome;
         socio.nacionalidade = data.nacionalidade;
@@ -20,8 +26,14 @@ export class CreateSocioService {
         socio.nome_mae = data.nome_mae;
         socio.nome_pai = data.nome_pai;
 
-        const socioCreate = await new SocioRepository().create(socio);
-    
-        return socioCreate;
+        return await this.repository.create(socio);
+    }
+
+    async update(id: number, dto: UpdateSocioRequestDto) {
+        const socio = await this.repository.findOne(id);
+        if (!socio) throw new Error('Sócio não encontrado');
+
+        Object.assign(socio, dto.getAll());
+        return await this.repository.update(id, socio);
     }
 }
