@@ -1,11 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Endereco } from "./enums/endereco.model";
-import { Socio } from "./enums/socio.model";
+import { Endereco } from './endereco.model'; 
+import { Socio } from './socio.model'; 
 
 @Entity("empresaImobiliaria")
 export class empresaImobiliaria {
-    // @PrimaryGeneratedColumn() 
-    // id: number;
+    @PrimaryGeneratedColumn() 
+    id: number;
 
     @Column({ type: 'varchar', length: 225})
     nome: string;

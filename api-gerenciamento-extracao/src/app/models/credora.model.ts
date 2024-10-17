@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Endereco } from "./enums/endereco.model";
+import { Endereco } from './endereco.model';
 
 
 @Entity("credora")
