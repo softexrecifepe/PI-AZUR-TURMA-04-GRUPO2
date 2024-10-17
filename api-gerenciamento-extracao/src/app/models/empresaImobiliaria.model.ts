@@ -2,8 +2,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Endereco } from './endereco.model'; 
 import { Socio } from './socio.model'; 
 
-@Entity("empresaImobiliaria")
-export class empresaImobiliaria {
+@Entity("EmpresaImobiliaria")
+export class EmpresaImobiliaria {
     @PrimaryGeneratedColumn() 
     id: number;
 
