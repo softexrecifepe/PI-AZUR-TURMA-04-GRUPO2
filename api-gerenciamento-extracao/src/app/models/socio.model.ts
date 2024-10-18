@@ -1,10 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { EstadoCivil } from "./enums/estadoCivil.enum";
+import { BaseEntity } from "./base.model";
 
 @Entity("socio")
-export class Socio {
-    @PrimaryGeneratedColumn()
-    id: number;
+export class Socio extends BaseEntity {
 
     @Column({ type: 'varchar', length: 255 })
     nome: string;

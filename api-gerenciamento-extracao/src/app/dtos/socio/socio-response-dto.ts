@@ -1,7 +1,7 @@
 import { EstadoCivil } from "../../models/enums/estadoCivil.enum";
 
 export type SocioResponseDto = {
-    id: number;
+    id: string;
     nome: string;
     nacionalidade: string;
     dataNascimento: Date;
