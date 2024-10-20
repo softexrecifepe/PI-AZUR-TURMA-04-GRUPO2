@@ -29,7 +29,7 @@ export class SocioService {
         return await this.repository.create(socio);
     }
 
-    async update(id: number, dto: UpdateSocioRequestDto) {
+    async update(id: string, dto: UpdateSocioRequestDto) {
         const socio = await this.repository.findOne(id);
         if (!socio) throw new Error('Sócio não encontrado');
 
