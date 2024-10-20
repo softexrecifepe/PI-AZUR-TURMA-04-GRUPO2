@@ -1,22 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity } from "typeorm";
 import { EstadoCivil } from "./enums/estadoCivil.enum";
+import { Pessoa } from "./pessoa.model";
 
 @Entity("socio")
-export class Socio {
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column({ type: 'varchar', length: 255 })
-    nome: string;
-
-    @Column({ type: 'varchar', length: 65 })
-    nacionalidade: string;
-
-    @Column({ type: 'date' })
-    dataNascimento: Date;
-
-    @Column({ type: 'varchar', length: 100 })
-    profissao: string;
+export class Socio extends Pessoa {
 
     @Column({ type: 'varchar', length: 100, unique: true })
     email: string;
@@ -27,9 +14,6 @@ export class Socio {
     @Column({ type: 'date', nullable: false })
     dataExpedicaoCREA: Date;
 
-    @Column({ type: 'varchar', length: 14, unique: true })
-    cpf: string;
-
     @Column({ type: 'enum', enum: EstadoCivil })
     estadoCivil: EstadoCivil;
 
@@ -38,7 +22,4 @@ export class Socio {
 
     @Column({ type: 'varchar', length: 255, nullable: true })
     nome_pai?: string;
-
-    // @ManyToOne(() => Endereco)
-    // endereco: Endereco;
 }

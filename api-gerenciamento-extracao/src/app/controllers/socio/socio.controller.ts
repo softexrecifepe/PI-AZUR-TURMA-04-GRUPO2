@@ -21,7 +21,7 @@ export class SocioController extends BaseController<SocioService> {
         const dto = new UpdateSocioRequestDto({
             ...req.body
         });
-        const id = parseInt(req.params.id, 10);
+        const id = req.params.id;
         return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Sócio atualizado com sucesso");
     }
 }
