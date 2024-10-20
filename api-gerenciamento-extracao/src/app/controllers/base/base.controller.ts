@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { QueryFailedError } from "typeorm";
-import { DuplicateEntryError } from "../errors/database.error";
+import { DuplicateEntryError } from "../../errors/database.error";
 
 export abstract class BaseController<TService> {
     protected service: TService;

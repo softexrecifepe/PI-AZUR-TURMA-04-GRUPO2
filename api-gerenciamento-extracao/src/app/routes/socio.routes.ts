@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { SocioController } from '../controllers/socio/socio.controller';
+import { SocioController } from '../controllers/socio.controller';
 import { authenticateJWT } from '../middlewares/authenticate-jwt';
 
 const socioRoutes = Router();
