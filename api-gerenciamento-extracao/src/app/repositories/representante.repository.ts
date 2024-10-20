@@ -11,22 +11,48 @@ export class RepresentanteRepository {
     }
 
     async create(representante: Representante){
-        return this.dataSource.getRepository(Representante).save(representante);
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try {
+            const createdSocio = await queryRunner.manager.save(Representante, representante);
+            await queryRunner.commitTransaction();
+            return createdSocio;
+        } catch (error) {
+            await queryRunner.rollbackTransaction();
+            throw error;
+        } finally {
+            await queryRunner.release();
+        }
     }
 
-    async update(id: number, representante: Representante){
-        await this.dataSource.getRepository(Representante).update(id, representante);
+    async update(id: string, representante: Representante){
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try {
+            await queryRunner.manager.update(Representante, id, representante);
+            await queryRunner.commitTransaction();
+            return this.findOne(id);
+        } catch (error) {
+            await queryRunner.rollbackTransaction();
+            throw error;
+        } finally {
+            await queryRunner.release();
+        }
     }
 
     async findAll(){
         return this.dataSource.getRepository(Representante).find();
     }
 
-    async findOne(id: number) {
+    async findOne(id: string) {
         return this.dataSource.getRepository(Representante).findOneBy({ id });
     }
 
-    async remove(id: number) {
+    async remove(id: string) {
         return this.dataSource.getRepository(Representante).delete(id);
     }
 }
