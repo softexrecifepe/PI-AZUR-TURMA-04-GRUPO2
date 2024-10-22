@@ -1,7 +1,7 @@
-import { CreateSocioRequestDto } from "../../dtos/socio/create-socio-request-dto";
-import { UpdateSocioRequestDto } from "../../dtos/socio/update-socio-request-dto";
-import { Socio } from "../../models/socio.model";
-import { SocioRepository } from "../../repositories/socio.repository";
+import { CreateSocioRequestDto } from "../dtos/socio/create-socio-request-dto";
+import { UpdateSocioRequestDto } from "../dtos/socio/update-socio-request-dto";
+import { Socio } from "../models/socio.model";
+import { SocioRepository } from "../repositories/socio.repository";
 
 export class SocioService {
     private repository: SocioRepository;

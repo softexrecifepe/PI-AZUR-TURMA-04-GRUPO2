@@ -22,6 +22,62 @@ const createSocioSchema = z.object({
   nome_pai: z.string().max(255, "Nome do pai pode ter no máximo 255 caracteres").optional(),
 })
 
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     CreateSocioRequestDto:
+ *       type: object
+ *       required:
+ *         - nome
+ *         - nacionalidade
+ *         - dataNascimento
+ *         - profissao
+ *         - email
+ *         - numeroCarteiraFuncional
+ *         - dataExpedicaoCREA
+ *         - cpf
+ *         - estadoCivil
+ *         - nome_mae
+ *       properties:
+ *         nome:
+ *           type: string
+ *           description: Nome completo do sócio
+ *         nacionalidade:
+ *           type: string
+ *           description: Nacionalidade do sócio
+ *         dataNascimento:
+ *           type: string
+ *           format: date
+ *           description: Data de nascimento no formato YYYY-MM-DD
+ *         profissao:
+ *           type: string
+ *           description: Profissão do sócio
+ *         email:
+ *           type: string
+ *           description: Email do sócio
+ *         numeroCarteiraFuncional:
+ *           type: string
+ *           description: Número da carteira funcional
+ *         dataExpedicaoCREA:
+ *           type: string
+ *           format: date
+ *           description: Data de expedição da carteira
+ *         cpf:
+ *           type: string
+ *           description: CPF do sócio
+ *         estadoCivil:
+ *           type: string
+ *           enum: [Solteiro, Casado, Divorciado, Viúvo]
+ *           description: Estado civil do sócio
+ *         nome_mae:
+ *           type: string
+ *           description: Nome da mãe do sócio
+ *         nome_pai:
+ *           type: string
+ *           description: Nome do pai do sócio (opcional)
+ */
 export class CreateSocioRequestDto extends AbstractDTO<typeof createSocioSchema> {
 
   protected rules() {

@@ -1,0 +1,18 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "version": "1.0.0",
+        "description": "Documentação da API",
+        "termsOfService": "http://localhost:3000/terms",
+        "contact": {
+            "email": "teste@teste.com"
+        }
+      },
+      "servers": [
+        {
+          "url": "http://localhost:3000"
+        }
+      ],
+    "apis": ["./src/controllers/**/*.ts", "./src/dtos/**/*.ts"]
+}
