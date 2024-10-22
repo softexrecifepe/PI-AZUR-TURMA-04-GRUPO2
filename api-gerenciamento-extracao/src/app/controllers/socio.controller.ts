@@ -1,15 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseController } from "./base/base.controller";
-import { SocioService } from "../services/socio.service";
+import { SocioService } from "../services/socio.service"; 
 import { CreateSocioRequestDto } from "../dtos/socio/create-socio-request-dto";
 import { UpdateSocioRequestDto } from "../dtos/socio/update-socio-request-dto";
 
-/**
- * @swagger
- * tags:
- *   name: Socios
- *   description: Endpoints relacionados aos sócios
- */
 
 export class SocioController extends BaseController<SocioService> {
     constructor() {

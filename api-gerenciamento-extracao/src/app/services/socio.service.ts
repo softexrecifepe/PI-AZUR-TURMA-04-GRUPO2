@@ -1,4 +1,5 @@
 import { CreateSocioRequestDto } from "../dtos/socio/create-socio-request-dto";
+import { SocioResponseDto } from "../dtos/socio/socio-response-dto";
 import { UpdateSocioRequestDto } from "../dtos/socio/update-socio-request-dto";
 import { Socio } from "../models/socio.model";
 import { SocioRepository } from "../repositories/socio.repository";
@@ -26,7 +27,8 @@ export class SocioService {
         socio.nome_mae = data.nome_mae;
         socio.nome_pai = data.nome_pai;
 
-        return await this.repository.create(socio);
+        const socioCreate = await this.repository.create(socio);
+        return this.toSocioResponseDto(socioCreate);
     }
 
     async update(id: string, dto: UpdateSocioRequestDto) {
@@ -34,6 +36,12 @@ export class SocioService {
         if (!socio) throw new Error('Sócio não encontrado');
 
         Object.assign(socio, dto.getAll());
-        return await this.repository.update(id, socio);
+        const socioUpdate = await this.repository.update(id, socio);
+        return this.toSocioResponseDto(socioUpdate);
+
+    }
+
+    private toSocioResponseDto({ id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numeroCarteiraFuncional, dataExpedicaoCREA, cpf, estadoCivil, nome_mae, nome_pai }: Socio): SocioResponseDto {
+        return { id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numeroCarteiraFuncional, dataExpedicaoCREA, cpf, estadoCivil, nome_mae, nome_pai };
     }
 }

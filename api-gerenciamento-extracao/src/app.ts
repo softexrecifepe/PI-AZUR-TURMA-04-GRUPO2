@@ -7,7 +7,7 @@ import swaggerUi from 'swagger-ui-express'
 import swaggerDocs from './app/config/swagger.json'
 
 import socioRoutes from './app/routes/socio.routes';
-
+import representanteRoutes from './app/routes/representante.routes';
 import {responseError} from './app/middlewares/response-error';
  
 const app = express();
@@ -20,6 +20,7 @@ app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.use('/api', socioRoutes);
+app.use('/api', representanteRoutes);
 
 
 app.get("terms", (req: Request, res: Response) => {
