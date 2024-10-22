@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { RepresentanteService } from "../services/representante.service";
-import { BaseController } from "./base.controller";
+import { BaseController } from "./base/base.controller"; 
 import { CreateRepresentanteRequestDto } from "../dtos/representante/create-representante-request-dto";
 import { UpdateRepresentanteRequestDto } from "../dtos/representante/update-representante-request-dto";
 
