@@ -25,7 +25,10 @@ export class RepresentanteService {
         representante.numDocumento = data.numDocumento;
         representante.dataExpedicao = data.dataExpedicao;
 
-        return await this.repository.create(representante);
+        const representanteCreate = await this.repository.create(representante);
+        const representantedto = this.toRepresentanteResponseDto(representanteCreate);
+        return representantedto;
+
 
     }
 
@@ -36,6 +39,17 @@ export class RepresentanteService {
         Object.assign(representante, dto.getAll());
         const representanteUpdate = await this.repository.update(id, representante);
         const representantedto = this.toRepresentanteResponseDto(representanteUpdate);
+        return representantedto;
+    }
+
+
+
+    async findOne(id: string){
+        const representante = await this.repository.findOne(id);
+        if (!representante) {
+            throw new Error(`Representante com ID ${id} não encontrado`);
+        }
+        const representantedto = this.toRepresentanteResponseDto(representante);
         return representantedto;
     }
 
@@ -50,12 +64,9 @@ export class RepresentanteService {
         dataExpedicao,
         cpf,
         estadoCivil,
-
     }: Representante): RepresentanteResponseDTO {
-        return { id,created_at, nome, nacionalidade, dataNascimento, profissao, numDocumento, dataExpedicao, cpf, estadoCivil, };
+        return { id, created_at, nome, nacionalidade, dataNascimento, profissao, numDocumento, dataExpedicao, cpf, estadoCivil };
     }
-
-
-
-
 }
+
+
