@@ -4,7 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express'
-import swaggerDocs from './app/config/swagger.json'
+import swaggerDocs from './app/config/api-docs/swagger.json'
 
 import socioRoutes from './app/routes/socio.routes';
 import representanteRoutes from './app/routes/representante.routes';
