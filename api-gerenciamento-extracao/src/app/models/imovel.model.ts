@@ -1,11 +1,9 @@
-import { Column, OneToOne, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, OneToOne, Entity } from "typeorm";
 import { Endereco } from "./endereco.model";
+import { BaseEntity } from "./base.model";
 
 @Entity("imovel")
-export class Imovel {
-   
-    @PrimaryGeneratedColumn()
-    private id: number;
+export class Imovel extends BaseEntity{
 
     @OneToOne(() => Endereco, { cascade: true })
     private endereco: Endereco;
@@ -23,14 +21,6 @@ export class Imovel {
     private areaComum: number;
 
     // Getters e Setters
-
-    public getId(): number {
-        return this.id;
-    }
-
-    public setId(id: number): void {
-        this.id = id;
-    }
 
     public getEndereco(): Endereco {
         return this.endereco;
