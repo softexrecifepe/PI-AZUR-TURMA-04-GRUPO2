@@ -2,16 +2,16 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../database/data-source";
 import { EmpresaImobiliaria  } from "../models/empresaImobiliaria.model"; 
 
-export class empresaImobiliariaRepository {
+export class EmpresaImobiliariaRepository {
     private dataSource: DataSource;
 
     constructor() {
         this.dataSource = AppDataSource;
     }
 
-    async create(empresaImobiliaria: EmpresaImobiliaria) {
-        return this.dataSource.getRepository(EmpresaImobiliaria).save(empresaImobiliaria);
-    }
+   async save(EmpresaImobiliaria : EmpresaImobiliaria): Promise<EmpresaImobiliaria>{
+        return this.dataSource.getRepository(EmpresaImobiliaria).save(EmpresaImobiliaria);
+   }
 
     async update(id: number, empresaImobiliaria: EmpresaImobiliaria) {
         await this.dataSource.getRepository(EmpresaImobiliaria).update(id, empresaImobiliaria);

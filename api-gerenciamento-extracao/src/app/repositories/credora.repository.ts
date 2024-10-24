@@ -9,11 +9,12 @@ export class CredoraRepository {
         this.dataSource = AppDataSource;
     }
 
-    async create(credora: Credora) {
-        return this.dataSource.getRepository(Credora).save(credora);
+    async save(credora: Credora): Promise<Credora> {
+        const repository = this.dataSource.getRepository(Credora);
+        return await repository.save(credora);
     }
 
-    async update(id: number, credora: Credora) {
+    async update(id: string, credora: Credora) {
         await this.dataSource.getRepository(Credora).update(id, credora);
         return this.findOne(id);
     }
@@ -22,11 +23,11 @@ export class CredoraRepository {
         return this.dataSource.getRepository(Credora).find();
     }
 
-    async findOne(id: number) {
+    async findOne(id: string) {
         return this.dataSource.getRepository(Credora).findOneBy({ id });
     }
 
-    async remove(id: number) {
+    async remove(id: string) {
         return this.dataSource.getRepository(Credora).delete(id);
     }
 }
