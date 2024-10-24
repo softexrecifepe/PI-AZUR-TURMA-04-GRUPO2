@@ -1,21 +1,22 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../database/data-source";
-import { Socio } from "../models/socio.model";
+import { Representante } from "../models/representante.model";
 
-export class SocioRepository {
-    private dataSource: DataSource;
+
+export class RepresentanteRepository {
+    private dataSource: DataSource;;
 
     constructor() {
         this.dataSource = AppDataSource;
     }
 
-    async create(socio: Socio) {
+    async create(representante: Representante){
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
 
         try {
-            const createdSocio = await queryRunner.manager.save(Socio, socio);
+            const createdSocio = await queryRunner.manager.save(Representante, representante);
             await queryRunner.commitTransaction();
             return createdSocio;
         } catch (error) {
@@ -26,13 +27,13 @@ export class SocioRepository {
         }
     }
 
-    async update(id: string, socio: Socio) {
+    async update(id: string, representante: Representante){
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
 
         try {
-            await queryRunner.manager.update(Socio, id, socio);
+            await queryRunner.manager.update(Representante, id, representante);
             await queryRunner.commitTransaction();
             return this.findOne(id);
         } catch (error) {
@@ -43,15 +44,15 @@ export class SocioRepository {
         }
     }
 
-    async findAll() {
-        return this.dataSource.getRepository(Socio).find();
+    async findAll(){
+        return this.dataSource.getRepository(Representante).find();
     }
 
     async findOne(id: string) {
-        return this.dataSource.getRepository(Socio).findOneBy({ id });
+        return this.dataSource.getRepository(Representante).findOneBy({ id });
     }
 
     async remove(id: string) {
-        return this.dataSource.getRepository(Socio).delete(id);
+        return this.dataSource.getRepository(Representante).delete(id);
     }
 }

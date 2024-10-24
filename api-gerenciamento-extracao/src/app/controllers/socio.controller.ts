@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { BaseController } from "../base.controller";
-import { SocioService } from "../../services/socio/socio.service"; 
-import { CreateSocioRequestDto } from "../../dtos/socio/create-socio-request-dto";
-import { UpdateSocioRequestDto } from "../../dtos/socio/update-socio-request-dto";
+import { BaseController } from "./base/base.controller";
+import { SocioService } from "../services/socio.service"; 
+import { CreateSocioRequestDto } from "../dtos/socio/create-socio-request-dto";
+import { UpdateSocioRequestDto } from "../dtos/socio/update-socio-request-dto";
 
 
 export class SocioController extends BaseController<SocioService> {
@@ -21,7 +21,7 @@ export class SocioController extends BaseController<SocioService> {
         const dto = new UpdateSocioRequestDto({
             ...req.body
         });
-        const id = parseInt(req.params.id, 10);
+        const id = req.params.id;
         return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Sócio atualizado com sucesso");
     }
 }
