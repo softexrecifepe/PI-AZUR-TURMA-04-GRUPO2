@@ -29,5 +29,10 @@ export class RepresentanteController extends BaseController<RepresentanteService
         return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Representante encontrado com sucesso");
     }
 
+    async remove(req: Request, res: Response, next: NextFunction) {
+        const id = req.params.id;
+        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Representante removido com sucesso");
+    }
+
 
 }

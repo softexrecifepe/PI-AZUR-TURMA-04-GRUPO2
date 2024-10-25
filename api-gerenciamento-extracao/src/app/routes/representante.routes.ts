@@ -8,5 +8,6 @@ const representanteController = new RepresentanteController();
 representanteRoutes.post('/representante', representanteController.create.bind(representanteController));
 representanteRoutes.patch('/representante/:id', representanteController.update.bind(representanteController));
 representanteRoutes.get('/representante/:id', representanteController.findOne.bind(representanteController));
+representanteRoutes.delete('/representante/:id', representanteController.remove.bind(representanteController));
 
 export default representanteRoutes;

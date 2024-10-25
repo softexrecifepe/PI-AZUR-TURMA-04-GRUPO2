@@ -53,6 +53,15 @@ export class RepresentanteService {
         return representantedto;
     }
 
+
+    async remove(id: string){
+        const representante = await this.repository.findOne(id);
+        if (!representante) {
+            throw new Error(`Representante com ID ${id} não encontrado`);
+        }
+        await this.repository.remove(id);
+    }
+
     private toRepresentanteResponseDto({
         id,
         created_at,
