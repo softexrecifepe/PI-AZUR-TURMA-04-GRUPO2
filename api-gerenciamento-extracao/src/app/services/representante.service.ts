@@ -62,6 +62,11 @@ export class RepresentanteService {
         await this.repository.remove(id);
     }
 
+    async findAll(){
+        const representante = await this.repository.findAll();
+        return representante.map((rep)=>this.toRepresentanteResponseDto(rep));
+    }
+
     private toRepresentanteResponseDto({
         id,
         created_at,
