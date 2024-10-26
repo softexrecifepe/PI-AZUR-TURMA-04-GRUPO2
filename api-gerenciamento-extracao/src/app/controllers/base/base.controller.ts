@@ -18,10 +18,7 @@ export abstract class BaseController<TService> {
                 data: result,
                 message: successMessage
             });
-        } catch (error: any) {
-            if (error instanceof QueryFailedError && error.driverError.code === 'ER_DUP_ENTRY') {
-                throw new DuplicateEntryError('Esse dado já existe no banco de dados.');
-            }
+        } catch (error) {
             next(error);
         }
     }

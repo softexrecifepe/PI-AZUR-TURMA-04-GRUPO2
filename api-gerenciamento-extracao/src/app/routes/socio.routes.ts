@@ -6,8 +6,13 @@ const socioRoutes = Router();
 const socioController = new SocioController();
 
 socioRoutes.post('/socio', ((req: Request, res: Response, next: NextFunction) => {
-    authenticateJWT(req, res, next)}), socioController.create.bind(socioController));
-socioRoutes.patch('/socio/:id',((req: Request, res: Response, next: NextFunction) => {
-    authenticateJWT(req, res, next)}), socioController.update.bind(socioController));
+    authenticateJWT(req, res, next)
+}), socioController.create.bind(socioController));
+socioRoutes.patch('/socio/:id', ((req: Request, res: Response, next: NextFunction) => {
+    authenticateJWT(req, res, next)
+}), socioController.update.bind(socioController));
+socioRoutes.get('/socio/:id', ((req: Request, res: Response, next: NextFunction) => {
+    authenticateJWT(req, res, next)
+}), socioController.findOne.bind(socioController));
 
 export default socioRoutes;
