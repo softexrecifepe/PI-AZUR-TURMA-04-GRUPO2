@@ -1,6 +1,6 @@
 import { CreateEnderecoRequestDto } from "../dtos/endereco/create-endereco-request-dto";
 import { EnderecoResponseDto } from "../dtos/endereco/endereco-response-dto";
-import { UpdateEnderecoRequestDto } from "../dtos/endereco/update-endereco-request-dto copy";
+import { UpdateEnderecoRequestDto } from "../dtos/endereco/update-endereco-request-dto";
 import { Endereco } from "../models/endereco.model";
 import { EnderecoRepository } from "../repositories/endereco.repository";
 
@@ -35,6 +35,23 @@ export class EnderecoService {
         const enderecodtodto = this.toEnderecoResponseDto(enderecoUpdate);
         return enderecodtodto;
     }
+    async findOne(id: string){
+        const endereco = await this.repository.findOne(id);
+        if (!endereco) {
+            throw new Error(`Endereço com ID ${id} não encontrado`);
+        }
+        const enderecodto = this.toEnderecoResponseDto(endereco);
+        return enderecodto;
+    }
+
+    async remove(id: string){
+        const endereco = await this.repository.findOne(id);
+        if (!endereco) {
+            throw new Error(`Endereço com ID ${id} não encontrado`);
+        }
+        await this.repository.remove(id);
+    }
+
 
     private toEnderecoResponseDto({
         id,
@@ -52,3 +69,4 @@ export class EnderecoService {
 
 
 }
+
