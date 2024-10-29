@@ -1,8 +1,9 @@
 import { Column, Entity, JoinColumn, OneToOne} from "typeorm";
 import { BaseEntity } from "./base.model";
+import { EstadoCivil } from "./enums/estadoCivil.enum";
 
-@Entity('Comprador')
-export class comprador extends BaseEntity{
+@Entity('comprador')
+export class Comprador extends BaseEntity{
     @Column({ type: 'varchar', length: 255 })
     nome: string;
 
@@ -34,7 +35,7 @@ export class comprador extends BaseEntity{
     cpf: string;
 
     @Column({ type: 'varchar', length: 255 })
-    estadoCivil: string;
+    estadoCivil: EstadoCivil;
 
     @Column({ type: 'varchar', length: 255 })
     endereco: string;
