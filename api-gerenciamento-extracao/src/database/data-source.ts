@@ -13,9 +13,9 @@ export const AppDataSource = new DataSource({
     type: "mysql",
     host: DB_HOST,
     port: parseInt(DB_PORT || "3306"),
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
-    database: DB_DATABASE,
+    username: 'root',
+    password: 'root',
+    database: 'mysql',
 
     // Somente use synchronize em ambiente de desenvolvimento, desabilite em produção
     synchronize: NODE_ENV === "dev" ? false : false,
