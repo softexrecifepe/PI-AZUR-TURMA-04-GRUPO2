@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { AppDataSource } from "../../database/data-source";
 import { EmpresaImobiliaria  } from "../models/empresaImobiliaria.model"; 
+import { Endereco } from "../models/endereco.model";
 
 export class EmpresaImobiliariaRepository {
     private dataSource: DataSource;
@@ -9,13 +10,38 @@ export class EmpresaImobiliariaRepository {
         this.dataSource = AppDataSource;
     }
 
-   async save(EmpresaImobiliaria : EmpresaImobiliaria): Promise<EmpresaImobiliaria>{
-        return this.dataSource.getRepository(EmpresaImobiliaria).save(EmpresaImobiliaria);
-   }
+    async create( empresaImobiliaria: EmpresaImobiliaria): Promise<EmpresaImobiliaria> {
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
 
-    async update(id: number, empresaImobiliaria: EmpresaImobiliaria) {
-        await this.dataSource.getRepository(EmpresaImobiliaria).update(id, empresaImobiliaria);
-        return this.findOne(id);
+        try{
+            const createEmpresaImobiliaria = await queryRunner.manager.save(EmpresaImobiliaria, empresaImobiliaria);
+            await queryRunner.commitTransaction();
+            return createEmpresaImobiliaria;
+        } catch (error){
+            await queryRunner.rollbackTransaction();
+            throw error;
+        } finally{
+            await queryRunner.release();
+        }
+    }
+
+    async update(id: number, credora: EmpresaImobiliaria) {
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try{
+            await queryRunner.manager.update(EmpresaImobiliaria, id, credora);
+            await queryRunner.commitTransaction();
+            return this.findOne(id);
+        } catch(error){
+            await queryRunner.rollbackTransaction();
+            throw error;
+        } finally{
+            await queryRunner.release();
+        }
     }
 
     async findAll() {

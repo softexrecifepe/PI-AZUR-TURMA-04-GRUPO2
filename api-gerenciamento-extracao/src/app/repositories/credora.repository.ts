@@ -9,14 +9,38 @@ export class CredoraRepository {
         this.dataSource = AppDataSource;
     }
 
-    async save(credora: Credora): Promise<Credora> {
-        const repository = this.dataSource.getRepository(Credora);
-        return await repository.save(credora);
+    async create( credora: Credora): Promise<Credora> {
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try{
+            const createCredora = await queryRunner.manager.save(Credora, credora);
+            await queryRunner.commitTransaction();
+            return createCredora;
+        } catch (error){
+            await queryRunner.rollbackTransaction();
+            throw error;
+        } finally{
+            await queryRunner.release();
+        }
     }
 
     async update(id: number, credora: Credora) {
-        await this.dataSource.getRepository(Credora).update(id, credora);
-        return this.findOne(id);
+        const queryRunner = this.dataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
+        try{
+            await queryRunner.manager.update(Credora, id, credora);
+            await queryRunner.commitTransaction();
+            return this.findOne(id);
+        } catch(error){
+            await queryRunner.rollbackTransaction();
+            throw error;
+        } finally{
+            await queryRunner.release();
+        }
     }
 
     async findAll() {
