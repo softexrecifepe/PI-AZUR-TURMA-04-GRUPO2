@@ -14,7 +14,7 @@ export class CredoraRepository {
         return await repository.save(credora);
     }
 
-    async update(id: string, credora: Credora) {
+    async update(id: number, credora: Credora) {
         await this.dataSource.getRepository(Credora).update(id, credora);
         return this.findOne(id);
     }
@@ -23,11 +23,11 @@ export class CredoraRepository {
         return this.dataSource.getRepository(Credora).find();
     }
 
-    async findOne(id: string) {
+    async findOne(id: number) {
         return this.dataSource.getRepository(Credora).findOneBy({ id });
     }
 
-    async remove(id: string) {
+    async remove(id: number) {
         return this.dataSource.getRepository(Credora).delete(id);
     }
 }

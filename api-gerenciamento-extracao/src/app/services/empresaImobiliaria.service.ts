@@ -34,6 +34,23 @@ export class EmpresaImobiliariaService{
         return EmpresaImobiliariadto;
     }
 
+    async findOne(id: number){
+        const empresaImobiliaria = await this.repository.findOne(id);
+        if (!empresaImobiliaria){
+            throw new Error (`Empresa com o ID ${id} não encontrada`);
+        }
+        const EmpresaImobiliariadto = this.toImobiliariaResponseDto(empresaImobiliaria);
+        return EmpresaImobiliariadto;
+    }
+
+    async remove(id: number){
+        const empresaImobiliaria = await this.repository.findOne(id);
+        if (!empresaImobiliaria){
+            throw new Error (`Empresa com o ID ${id} não encontrada`);
+        }
+        await this.repository.remove(id);
+    }
+
     private toImobiliariaResponseDto(EmpresaImobiliaria: EmpresaImobiliaria): ImobiliariaResponseDto{
         return{
             id: EmpresaImobiliaria.id,

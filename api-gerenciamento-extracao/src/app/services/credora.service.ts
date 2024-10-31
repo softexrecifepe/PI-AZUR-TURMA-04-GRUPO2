@@ -24,7 +24,7 @@ export class CredoraService {
         return this.toCredoraResponseDto(savedCredora);
     }
 
-    async update(id: string, dto: UpdateCredoraRequestDto): Promise<CredoraResponseDto> {
+    async update(id: number, dto: UpdateCredoraRequestDto): Promise<CredoraResponseDto> {
         const credora = await this.repository.findOne(id);
         if (!credora) throw new Error ('Credora não encontrada!');
 
@@ -34,7 +34,7 @@ export class CredoraService {
         return credoradto;
     }
 
-    async findOne(id: string){
+    async findOne(id: number){
         const credora = await this.repository.findOne(id);
         if (!credora){
             throw new Error(`Credora com o ID ${id} não encontrado!`);
@@ -44,7 +44,7 @@ export class CredoraService {
         
     }
 
-    async remove(id: string){
+    async remove(id: number){
         const credora = await this.repository.findOne(id);
         if (!credora){
             throw new Error (`Credora com o ID ${id} não encontrado!`);
