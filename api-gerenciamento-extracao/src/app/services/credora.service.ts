@@ -34,6 +34,24 @@ export class CredoraService {
         return credoradto;
     }
 
+    async findOne(id: string){
+        const credora = await this.repository.findOne(id);
+        if (!credora){
+            throw new Error(`Credora com o ID ${id} não encontrado!`);
+        }
+        const credoradto = this.toCredoraResponseDto(credora);
+        return credoradto;
+        
+    }
+
+    async remove(id: string){
+        const credora = await this.repository.findOne(id);
+        if (!credora){
+            throw new Error (`Credora com o ID ${id} não encontrado!`);
+        }
+        await this.repository.remove(id);
+    }
+
     private toCredoraResponseDto({
         id, 
         created_at,
