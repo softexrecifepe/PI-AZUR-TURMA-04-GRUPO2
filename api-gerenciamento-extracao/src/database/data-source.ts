@@ -3,6 +3,8 @@ import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
 import { Socio } from "../app/models/socio.model";
 import { Representante } from "../app/models/representante.model";
+import { Endereco } from "../app/models/endereco.model";
+import { Imovel } from "../app/models/imovel.model";
 
 
 dotenv.config();
@@ -20,7 +22,7 @@ export const AppDataSource = new DataSource({
     // Somente use synchronize em ambiente de desenvolvimento, desabilite em produção
     synchronize: NODE_ENV === "dev" ? false : false,
     logging: NODE_ENV === "dev" ? true : false,
-    entities: [Socio, Representante],
+    entities: [Socio, Representante, Endereco, Imovel],
     migrations: ["src/database/migrations/*.ts"],
     subscribers: []
 });

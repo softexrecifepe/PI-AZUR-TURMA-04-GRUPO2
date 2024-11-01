@@ -9,6 +9,8 @@ import swaggerDocs from './app/config/api-docs/swagger.json'
 import socioRoutes from './app/routes/socio.routes';
 import representanteRoutes from './app/routes/representante.routes';
 import {responseError} from './app/middlewares/response-error';
+import enderecoRoutes from './app/routes/endereco.routes';
+import imovelRoutes from './app/routes/imovel.routes';
  
 const app = express();
  
@@ -21,6 +23,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.use('/api', socioRoutes);
 app.use('/api', representanteRoutes);
+app.use('/api', enderecoRoutes)
+app.use('/api', imovelRoutes)
 
 
 app.get("terms", (req: Request, res: Response) => {
