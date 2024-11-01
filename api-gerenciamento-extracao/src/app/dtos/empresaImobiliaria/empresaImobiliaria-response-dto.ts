@@ -3,7 +3,8 @@ import { Socio } from "../../models/socio.model";
 
 export type ImobiliariaResponseDto = {
   
-    id: number;
-    nome: string;
+    id: string,
+    created_at: Date,
+    nomeImobiliaria: string;
     cnpj: string;
 }
