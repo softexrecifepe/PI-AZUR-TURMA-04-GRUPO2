@@ -1,6 +1,8 @@
-import { EstadoCivil } from "../../models/enums/estadoCivil.enum";
+import { Comprador } from "../../models/comprador.model";
 
-export type CreateCompradorRequestDto = {
+export type CompradorResponseDto = {
+    id: string;
+    created_at: Date;
     nome: string;
     nacionalidade: string;
     dataNascimento: Date;
@@ -11,7 +13,7 @@ export type CreateCompradorRequestDto = {
     orgaoExpedidor: string;
     dataExpedicao: Date;
     cpf: string;
-    estadoCivil: EstadoCivil;
+    estadoCivil: string;
     endereco: string;
     formaPagamento: string;
     rendaComprovada: number;

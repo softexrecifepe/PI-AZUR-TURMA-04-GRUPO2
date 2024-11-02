@@ -42,6 +42,23 @@ export class AquisicaoImovelService {
         return this.toAquisicaoImovelResponseDto(aquisicaoImovelUpdate);
 
     }
+    async findOne(id: string){
+        const aquisicao_imovel = await this.repository.findOne(id);
+        if (!aquisicao_imovel) {
+            throw new Error(`Aquisição Imóvel com ID ${id} não encontrado`);
+        }
+        const aquisicao_imoveldto = this.toAquisicaoImovelResponseDto(aquisicao_imovel);
+        return aquisicao_imoveldto;
+    }
+
+
+    async remove(id: string){
+        const aquisicao_imovel = await this.repository.findOne(id);
+        if (!aquisicao_imovel) {
+            throw new Error(`Aquisição Imóvel com ID ${id} não encontrado`);
+        }
+        await this.repository.remove(id);
+    }
 
     private toAquisicaoImovelResponseDto({ id, created_at, valorAquisicao, recursosProprios, recursosFGTS, financiamentoCredora, origemRecursos, normaRegulamentadora, valorAcessorias, valorDivida, valorLeilao, sistemaAmortizacao, attSaldoDevedor}: AquisicaoImovel): AquisicaoImovelResponseDto {
         return { id, created_at, valorAquisicao, recursosProprios, recursosFGTS, financiamentoCredora, origemRecursos, normaRegulamentadora, valorAcessorias, valorDivida, valorLeilao, sistemaAmortizacao, attSaldoDevedor };
