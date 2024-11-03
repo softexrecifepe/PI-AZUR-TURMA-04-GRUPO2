@@ -22,7 +22,7 @@ const updateImovelSchema = z.object({
       .max(8, "cep só pode ter no máximo 8"),
   })
   .optional(),
-
+  enderecoId: z.string().uuid("O ID do endereço deve ser um UUID válido"),
   caracteristica: z.string()
       .min(1, "Característica é obrigatório")
       .max(255, "Característica só pode ter no máximo 255 caracteres")

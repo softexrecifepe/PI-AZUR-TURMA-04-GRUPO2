@@ -1,11 +1,12 @@
-import { Column, OneToOne, Entity } from "typeorm";
+import { Column, OneToOne, Entity, JoinColumn } from "typeorm";
 import { Endereco } from "./endereco.model";
 import { BaseEntity } from "./base.model";
 
 @Entity("imovel")
 export class Imovel extends BaseEntity{
 
-    @OneToOne(() => Endereco, { cascade: true })
+    @OneToOne(() => Endereco)
+    @JoinColumn({name: "endereco_id"})
     endereco: Endereco;
    
     @Column({ type: 'varchar', length: 150 })
