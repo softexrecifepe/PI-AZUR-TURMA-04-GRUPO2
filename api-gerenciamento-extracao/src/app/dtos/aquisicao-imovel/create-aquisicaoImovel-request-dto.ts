@@ -49,6 +49,8 @@ const createAquisicaoImovelSchema = z.object({
   imovel: z.object({
     id: z.number().positive("ID do imóvel deve ser positivo") // Supondo que Imovel tenha um campo ID
   }).optional(), // Dependendo de como a relação é criada, pode ser opcional.
+
+  imovelId: z.string().uuid("O ID do imóvel deve ser um UUID válido"),
 });
 
 export class CreateAquisicaoImovelRequestDto extends AbstractDTO<typeof createAquisicaoImovelSchema> {
