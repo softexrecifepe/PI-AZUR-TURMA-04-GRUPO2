@@ -13,21 +13,10 @@ export class SocioService {
     }
 
     async create(dto: CreateSocioRequestDto) {
-        const data  = dto.getAll();
-        
-        const socio = new Socio();
-        socio.nome = data.nome;
-        socio.nacionalidade = data.nacionalidade;
-        socio.dataNascimento = data.dataNascimento;
-        socio.profissao = data.profissao;
-        socio.email = data.email;
-        socio.numeroCarteiraFuncional = data.numeroCarteiraFuncional;
-        socio.dataExpedicaoCREA = data.dataExpedicaoCREA;
-        socio.cpf = data.cpf;
-        socio.estadoCivil = data.estadoCivil;
-        socio.nome_mae = data.nome_mae;
-        socio.nome_pai = data.nome_pai;
+        const data = dto.getAll();
 
+        const socio = new Socio();
+        Object.assign(socio, data);
         const socioCreate = await this.repository.create(socio);
         return this.toSocioResponseDto(socioCreate);
     }
@@ -37,17 +26,22 @@ export class SocioService {
         if (!socio) throw new NotFoundError('Sócio não encontrado');
 
         Object.assign(socio, dto.getAll());
+
         const socioUpdate = await this.repository.update(id, socio);
         return this.toSocioResponseDto(socioUpdate);
+
     }
 
-    async findOne(id: string){
+    async findOne(id: string) {
         const socio = await this.repository.findOne(id);
-        if (!socio) {
-            throw new NotFoundError(`Sócio com ID ${id} não encontrado`);
-        }
-        const representantedto = this.toSocioResponseDto(socio);
-        return representantedto;
+        if (!socio) throw new NotFoundError(`Sócio com ID ${id} não encontrado`);
+        return this.toSocioResponseDto(socio);
+    }
+
+    async remove(id: string) {
+        const socio = await this.repository.findOne(id);
+        if (!socio) throw new NotFoundError(`Sócio com ID ${id} não encontrado`);
+        await this.repository.remove(id);
     }
 
     private toSocioResponseDto({ id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numeroCarteiraFuncional, dataExpedicaoCREA, cpf, estadoCivil, nome_mae, nome_pai }: Socio): SocioResponseDto {

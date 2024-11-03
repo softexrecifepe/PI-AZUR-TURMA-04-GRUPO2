@@ -14,5 +14,8 @@ socioRoutes.patch('/socio/:id', ((req: Request, res: Response, next: NextFunctio
 socioRoutes.get('/socio/:id', ((req: Request, res: Response, next: NextFunction) => {
     authenticateJWT(req, res, next)
 }), socioController.findOne.bind(socioController));
+socioRoutes.delete('/socio/:id', ((req: Request, res: Response, next: NextFunction) => {
+    authenticateJWT(req, res, next)
+}), socioController.remove.bind(socioController));
 
 export default socioRoutes;

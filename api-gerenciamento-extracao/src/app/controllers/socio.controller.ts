@@ -27,7 +27,12 @@ export class SocioController extends BaseController<SocioService> {
 
     async findOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Sócio encontrado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Sócio encontrado com sucesso", 200);
+    }
+
+    async remove(req: Request, res: Response, next: NextFunction) {
+        const id = req.params.id;
+        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Sócio removido com sucesso", 200);
     }
 
 }
