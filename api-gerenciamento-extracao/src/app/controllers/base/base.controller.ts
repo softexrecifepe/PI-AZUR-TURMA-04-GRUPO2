@@ -9,19 +9,16 @@ export abstract class BaseController<TService> {
         this.service = service;
     }
 
-    protected async handleRequest(req: Request, res: Response, next: NextFunction, action: (data: any) => Promise<any>, successMessage: string) {
+    protected async handleRequest(req: Request, res: Response, next: NextFunction, action: (data: any) => Promise<any>, successMessage: string, statusCode: number = 201) {
         try {
             const data = req.body;
             const result = await action(data);
-            res.status(201).json({
+            res.status(statusCode).json({
                 status: 'success',
                 data: result,
                 message: successMessage
             });
-        } catch (error: any) {
-            if (error instanceof QueryFailedError && error.driverError.code === 'ER_DUP_ENTRY') {
-                throw new DuplicateEntryError('Esse dado já existe no banco de dados.');
-            }
+        } catch (error) {
             next(error);
         }
     }

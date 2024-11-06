@@ -1,0 +1,314 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Documentation",
+    "version": "1.0.0",
+    "description": "Documentação da API",
+    "termsOfService": "http://localhost:3000/terms",
+    "contact": {
+      "email": "teste@teste.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "API de desenvolvimento"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Representante": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "nacionalidade": { "type": "string" },
+          "dataNascimento": { "type": "string", "format": "date" },
+          "profissao": { "type": "string" },
+          "cpf": { "type": "string" },
+          "estadoCivil": { "type": "string", "enum": ["Solteiro", "Casado", "Divorciado", "Viúvo"] },
+          "numDocumento": { "type": "string" },
+          "dataExpedicao": { "type": "string", "format": "date" }
+        },
+        "required": ["nome", "cpf", "estadoCivil", "numDocumento", "dataExpedicao"]
+      },
+      "Socio": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "nacionalidade": { "type": "string" },
+          "dataNascimento": { "type": "string", "format": "date" },
+          "profissao": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "cpf": { "type": "string" },
+          "estadoCivil": { "type": "string" },
+          "numeroCarteiraFuncional": { "type": "string" },
+          "dataExpedicaoCREA": { "type": "string", "format": "date" },
+          "nome_mae": { "type": "string" },
+          "nome_pai": { "type": "string" }
+        },
+        "required": [
+          "nome",
+          "nacionalidade",
+          "dataNascimento",
+          "cpf",
+          "profissao",
+          "email",
+          "estadoCivil",
+          "numeroCarteiraFuncional",
+          "dataExpedicaoCREA",
+          "nome_mae"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/socio": {
+      "post": {
+        "summary": "Cria um novo sócio",
+        "description": "Essa rota será responsável por cadastrar um novo sócio",
+        "tags": ["Socios"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Socio"
+              },
+              "examples": {
+                "socio": {
+                  "value": {
+                    "nome": "Eduardo",
+                    "nacionalidade": "Brasileiro",
+                    "dataNascimento": "1990-01-06",
+                    "profissao": "Engenheiro",
+                    "email": "joaozinhoooooooooo@example.com",
+                    "numeroCarteiraFuncional": "123456789",
+                    "dataExpedicaoCREA": "2015-05-20",
+                    "cpf": "12333765730",
+                    "estadoCivil": "Solteiro",
+                    "nome_mae": "Maria Silva"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sócio criado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Unauthorized. Token invalid or Token not provided"
+          },
+          "409": {
+            "description": "CPF ou Email já cadastrado."
+          }
+        }
+      }
+    },
+    "/socio/{id}": {
+      "patch": {
+        "summary": "Atualiza um sócio existente",
+        "description": "Essa rota será responsável por atualizar os dados de um sócio existente",
+        "tags": ["Socios"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do sócio a ser atualizado"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Socio"
+              },
+              "examples": {
+                "socio": {
+                  "value": {
+                    "nome": "Eduardo Atualizado",
+                    "nacionalidade": "Brasileiro",
+                    "dataNascimento": "1990-01-06",
+                    "profissao": "Engenheiro",
+                    "email": "eduardo-atualizado@example.com",
+                    "numeroCarteiraFuncional": "123456789",
+                    "dataExpedicaoCREA": "2015-05-20",
+                    "cpf": "12333765730",
+                    "estadoCivil": "Solteiro",
+                    "nome_mae": "Maria Silva"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sócio atualizado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Unauthorized. Token invalid or Token not provided"
+          },
+          "404": {
+            "description": "Sócio não encontrado"
+          },
+          "409": {
+            "description": "CPF ou Email já cadastrado."
+          }
+        }
+      }
+    },
+    "/representante": {
+      "post": {
+        "summary": "Cria um novo representante",
+        "description": "Essa rota será responsável por cadastrar um novo representante",
+        "tags": ["Representante"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Representante"
+              },
+              "examples": {
+                "representante": {
+                  "value": {
+                    "nome": "José da Silva",
+                    "nacionalidade": "Brasileiro",
+                    "dataNascimento": "1985-08-15",
+                    "profissao": "Advogado",
+                    "cpf": "12345678900",
+                    "estadoCivil": "Casado",
+                    "numDocumento": "123456789",
+                    "dataExpedicao": "2020-01-01"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Representante criado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Unauthorized. Token invalid or Token not provided"
+          },
+          "409": {
+            "description": "CPF ou Email já cadastrado."
+          }
+        }
+      }
+    },
+    "/representante/{id}": {
+      "patch": {
+        "summary": "Atualiza um representante existente",
+        "description": "Essa rota será responsável por atualizar os dados de um representante existente",
+        "tags": ["Representante"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do representante a ser atualizado"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Representante"
+              },
+              "examples": {
+                "socio": {
+                  "value": {
+                    "nome": "Eduardo Atualizado",
+                    "nacionalidade": "Brasileiro",
+                    "dataNascimento": "1990-01-06",
+                    "profissao": "Engenheiro",
+                    "email": "eduardo-atualizado@example.com",
+                    "numeroCarteiraFuncional": "123456789",
+                    "dataExpedicaoCREA": "2015-05-20",
+                    "cpf": "12333765730",
+                    "estadoCivil": "Solteiro",
+                    "nome_mae": "Maria Silva"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sócio atualizado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Unauthorized. Token invalid or Token not provided"
+          },
+          "404": {
+            "description": "Representante não encontrado"
+          },
+          "409": {
+            "description": "CPF ou Email já cadastrado."
+          }
+        }
+      }
+    }
+  }
+}
+
+
