@@ -14,9 +14,6 @@ export class Socio extends Pessoa {
     @Column({ type: 'date', nullable: false })
     dataExpedicaoCREA: Date;
 
-    @Column({ type: 'enum', enum: EstadoCivil })
-    estadoCivil: EstadoCivil;
-
     @Column({ type: 'varchar', length: 255 })
     nome_mae: string;
 

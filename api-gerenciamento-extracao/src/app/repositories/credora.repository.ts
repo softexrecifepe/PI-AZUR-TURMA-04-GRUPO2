@@ -26,7 +26,7 @@ export class CredoraRepository {
         }
     }
 
-    async update(id: number, credora: Credora) {
+    async update(id: string, credora: Credora) {
         const queryRunner = this.dataSource.createQueryRunner();
         await queryRunner.connect();
         await queryRunner.startTransaction();
@@ -47,11 +47,11 @@ export class CredoraRepository {
         return this.dataSource.getRepository(Credora).find();
     }
 
-    async findOne(id: number) {
+    async findOne(id: string) {
         return this.dataSource.getRepository(Credora).findOneBy({ id });
     }
 
-    async remove(id: number) {
+    async remove(id: string) {
         return this.dataSource.getRepository(Credora).delete(id);
     }
 }

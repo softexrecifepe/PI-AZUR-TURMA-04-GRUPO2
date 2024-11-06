@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.model';
 import { Endereco } from './endereco.model';
 import { Representante } from './representante.model';
@@ -16,8 +16,12 @@ export class Credora extends BaseEntity{
     @Column({ type: 'varchar', length: 65, unique: true})
     cnpj: string;
 
+    @ManyToOne(() => Endereco)
+    @JoinColumn({name: 'endereco_id'})
+    endereco: Endereco;
+
     @OneToOne(() => Representante)
-    @JoinColumn()
+    @JoinColumn({name: 'representante_id'})
     representante: Representante;  
 
 }
