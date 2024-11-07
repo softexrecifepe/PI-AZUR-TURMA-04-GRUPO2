@@ -1,6 +1,7 @@
 import { CreateImobiliariaRequestDto } from "../dtos/empresaImobiliaria/create-empresaImobiliaria-request-dto";
 import { ImobiliariaResponseDto } from "../dtos/empresaImobiliaria/empresaImobiliaria-response-dto";
 import { UpdateImobiliariaRequestDto } from "../dtos/empresaImobiliaria/update-empresaImobiliaria-request-dto";
+import { NotFoundError } from "../errors/not-found.error";
 import { Incorporadora } from "../models/incorporadora.model";
 import { EnderecoRepository } from "../repositories/endereco.repository";
 import { IncorporadoraRepository } from "../repositories/incorporadora.repository";
@@ -20,13 +21,13 @@ export class IncorporadoraService{
         const enderecoRepository = new EnderecoRepository();
         const endereco = await enderecoRepository.findOne(data.enderecoId)
 
-        if (!endereco) throw new Error("Endereço não encontrado")
+        if (!endereco) throw new NotFoundError("Endereço não encontrado")
 
 
         const socioRepository = new SocioRepository();
         const socio = await socioRepository.findOne(data.socioId)
 
-        if (!socio) throw new Error("Socio não encontrado")
+        if (!socio) throw new NotFoundError("Socio não encontrado")
 
 
         const incorporadora = new Incorporadora();
@@ -44,7 +45,7 @@ export class IncorporadoraService{
 
     async update(id: string, dto: UpdateImobiliariaRequestDto): Promise<Incorporadora>{
         const incorporadora = await this.repository.findOne(id);
-        if (!incorporadora) throw new Error ('Incorporadora não encontrada');
+        if (!incorporadora) throw new NotFoundError('Incorporadora não encontrada');
 
         const data = dto.getAll();
 
@@ -52,7 +53,7 @@ export class IncorporadoraService{
             const enderecoRepository = new EnderecoRepository();
             const endereco = await enderecoRepository.findOne(data.enderecoId);
 
-            if (!endereco) throw new Error("Endereço não encontrado");
+            if (!endereco) throw new NotFoundError("Endereço não encontrado");
             incorporadora.endereco = endereco;
         }
 
@@ -60,7 +61,7 @@ export class IncorporadoraService{
             const socioRepository = new SocioRepository();
             const socio = await socioRepository.findOne(data.socioId);
 
-            if (!socio) throw new Error("Sócio não encontrado");
+            if (!socio) throw new NotFoundError("Sócio não encontrado");
             incorporadora.socio = socio;
         }
 
@@ -78,7 +79,7 @@ export class IncorporadoraService{
     async findOne(id: string){
         const incorporadora = await this.repository.findOne(id);
         if (!incorporadora){
-            throw new Error (`Incorporadora com o ID ${id} não encontrada`);
+            throw new NotFoundError(`Incorporadora com o ID ${id} não encontrada`);
         }
         const incorporadoraDto = this.toImobiliariaResponseDto(incorporadora);
         return incorporadoraDto;
@@ -87,7 +88,7 @@ export class IncorporadoraService{
     async remove(id: string){
         const incorporadora = await this.repository.findOne(id);
         if (!incorporadora){
-            throw new Error (`Incorporadora com o ID ${id} não encontrada`);
+            throw new NotFoundError(`Incorporadora com o ID ${id} não encontrada`);
         }
         await this.repository.remove(id);
     }

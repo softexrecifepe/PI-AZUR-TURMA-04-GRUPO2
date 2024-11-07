@@ -4,6 +4,7 @@ import { UpdateCompradorRequestDto } from "../dtos/comprador/update-comprador-re
 import { Comprador } from "../models/comprador.model";
 import { CompradorRepository } from "../repositories/comprador.repository";
 import { EnderecoRepository } from "../repositories/endereco.repository";
+import { NotFoundError } from "../errors/not-found.error";
 
 export class CompradorService {
     private repository: CompradorRepository;
@@ -18,7 +19,7 @@ export class CompradorService {
         const enderecoRepository = new EnderecoRepository();
         const endereco = await enderecoRepository.findOne(data.enderecoId)
 
-        if (!endereco) throw new Error("Endereço não encontrado")
+        if (!endereco) throw new NotFoundError("Endereço não encontrado")
 
         const comprador = new Comprador();
         comprador.cpf = data.cpf;
@@ -45,7 +46,7 @@ export class CompradorService {
 
     async update(id: string, dto: UpdateCompradorRequestDto) {
         const comprador = await this.repository.findOne(id);
-        if (!comprador) throw new Error('Comprador não encontrado');
+        if (!comprador) throw new NotFoundError('Comprador não encontrado');
 
         const data = dto.getAll();
 
@@ -53,7 +54,7 @@ export class CompradorService {
             const enderecoRepository = new EnderecoRepository();
             const endereco = await enderecoRepository.findOne(data.enderecoId);
 
-            if (!endereco) throw new Error("Endereço não encontrado");
+            if (!endereco) throw new NotFoundError("Endereço não encontrado");
             comprador.endereco = endereco;
         }
 
@@ -80,7 +81,7 @@ export class CompradorService {
     async findOne(id: string) {
         const comprador = await this.repository.findOne(id);
         if (!comprador) {
-            throw new Error(`Comprador com ID ${id} não encontrado`);
+            throw new NotFoundError(`Comprador com ID ${id} não encontrado`);
         }
         const compradordto = this.toCompradorResponseDto(comprador);
         return compradordto;
@@ -90,14 +91,14 @@ export class CompradorService {
     async remove(id: string) {
         const comprador = await this.repository.findOne(id);
         if (!comprador) {
-            throw new Error(`Comprador com ID ${id} não encontrado`);
+            throw new NotFoundError(`Comprador com ID ${id} não encontrado`);
         }
         await this.repository.remove(id);
     }
 
 
-    private toCompradorResponseDto({ id, created_at, cpf, dataExpedicao, dataNascimento, numDocumento, email, endereco, estadoCivil, nome_mae, nome_pai, formaPagamento, nacionalidade, nome, orgaoExpedidor, profissao, rendaComprovada, rendaNaoComprovada }: Comprador): CompradorResponseDto {
-        return { id, created_at, cpf, dataExpedicao, dataNascimento, numDocumento, email, endereco, estadoCivil, nome_mae, nome_pai, formaPagamento, nacionalidade, nome, orgaoExpedidor, profissao, rendaComprovada, rendaNaoComprovada }
+    private toCompradorResponseDto({ id, created_at, cpf, dataExpedicao, dataNascimento, numDocumento, email, endereco, estadoCivil, nome_mae, nome_pai, formaPagamento, nacionalidade, nome, orgaoExpedidor, profissao, rendaComprovada, rendaNaoComprovada, regimeComunhao }: Comprador): CompradorResponseDto {
+        return { id, created_at, cpf, dataExpedicao, dataNascimento, numDocumento, email, endereco, estadoCivil, nome_mae, nome_pai, formaPagamento, nacionalidade, nome, orgaoExpedidor, profissao, rendaComprovada, rendaNaoComprovada, regimeComunhao }
     }
 
 }

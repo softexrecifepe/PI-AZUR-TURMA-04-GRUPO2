@@ -1,5 +1,6 @@
 import { Column, Entity } from "typeorm";
 import { BaseEntity } from "./base.model";
+import { nullable } from "zod";
 
 @Entity("endereco") 
 export class Endereco extends BaseEntity{
@@ -21,5 +22,7 @@ export class Endereco extends BaseEntity{
     @Column({ type: 'varchar', length: 8 })
     cep: string;
 
-    
+    @Column({type: 'varchar', length: 255, nullable: true})
+    complemento: string;
+   
 }

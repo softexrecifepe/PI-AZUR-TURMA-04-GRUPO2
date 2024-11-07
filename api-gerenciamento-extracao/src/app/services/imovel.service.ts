@@ -1,6 +1,7 @@
 import { CreateImovelRequestDto } from "../dtos/imovel/create-imovel-request-dto";
 import { ImovelResponseDto } from "../dtos/imovel/imovel-response-dto";
 import { UpdateImovelRequestDto } from "../dtos/imovel/update-imovel-request-dto";
+import { NotFoundError } from "../errors/not-found.error";
 import { Imovel } from "../models/imovel.model";
 import { EnderecoRepository } from "../repositories/endereco.repository";
 import { ImovelRepository } from "../repositories/imovel.repository";
@@ -19,7 +20,7 @@ export class ImovelService {
         const enderecoRepository = new EnderecoRepository();
         const endereco = await enderecoRepository.findOne(data.enderecoId)
 
-        if(!endereco) throw new Error("Endereço não encontrado")
+        if(!endereco) throw new NotFoundError("Endereço não encontrado")
 
         const imovel = new Imovel();
         imovel.endereco = endereco;
@@ -32,7 +33,7 @@ export class ImovelService {
 
     async update(id: string, dto: UpdateImovelRequestDto) {
         const imovel = await this.repository.findOne(id);
-        if (!imovel) throw new Error('Endereço não encontrado');
+        if (!imovel) throw new NotFoundError('Endereço não encontrado');
 
         const data = dto.getAll();
 
@@ -41,7 +42,7 @@ export class ImovelService {
             const enderecoRepository = new EnderecoRepository();
             const endereco = await enderecoRepository.findOne(data.enderecoId);
 
-            if (!endereco) throw new Error("Endereço não encontrado");
+            if (!endereco) throw new NotFoundError("Endereço não encontrado");
             imovel.endereco = endereco;
         }
 
@@ -58,7 +59,7 @@ export class ImovelService {
     async findOne(id: string){
         const imovel = await this.repository.findOne(id);
         if (!imovel) {
-            throw new Error(`Imovel com ID ${id} não encontrado`);
+            throw new NotFoundError(`Imovel com ID ${id} não encontrado`);
         }
         const imoveldto = this.toImovelResponseDto(imovel);
         return imoveldto;
@@ -67,7 +68,7 @@ export class ImovelService {
     async remove(id: string){
         const imovel = await this.repository.findOne(id);
         if (!imovel) {
-            throw new Error(`Imovel com ID ${id} não encontrado`);
+            throw new NotFoundError(`Imovel com ID ${id} não encontrado`);
         }
         await this.repository.remove(id);
     }

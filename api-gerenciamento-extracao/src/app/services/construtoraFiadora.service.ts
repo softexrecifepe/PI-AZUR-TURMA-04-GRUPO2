@@ -1,6 +1,7 @@
 import { CreateImobiliariaRequestDto } from "../dtos/empresaImobiliaria/create-empresaImobiliaria-request-dto";
 import { ImobiliariaResponseDto } from "../dtos/empresaImobiliaria/empresaImobiliaria-response-dto";
 import { UpdateImobiliariaRequestDto } from "../dtos/empresaImobiliaria/update-empresaImobiliaria-request-dto";
+import { NotFoundError } from "../errors/not-found.error";
 import { ConstrutoraFiadora } from "../models/construtoraFiadora.model";
 import { ConstrutoraFiadoraRepository } from "../repositories/construtoraFiadora.repository";
 import { EnderecoRepository } from "../repositories/endereco.repository";
@@ -20,13 +21,13 @@ export class ConstrutoraFiadoraService {
         const enderecoRepository = new EnderecoRepository();
         const endereco = await enderecoRepository.findOne(data.enderecoId)
 
-        if (!endereco) throw new Error("Endereço não encontrado")
+        if (!endereco) throw new NotFoundError("Endereço não encontrado")
 
 
         const socioRepository = new SocioRepository();
         const socio = await socioRepository.findOne(data.socioId)
 
-        if (!socio) throw new Error("Socio não encontrado")
+        if (!socio) throw new NotFoundError("Socio não encontrado")
 
         const construtoraFiadora = new ConstrutoraFiadora();
         construtoraFiadora.nomeImobiliaria = data.nomeImobiliaria;
@@ -43,7 +44,7 @@ export class ConstrutoraFiadoraService {
 
     async update(id: string, dto: UpdateImobiliariaRequestDto): Promise<ConstrutoraFiadora> {
         const construtoraFiadora = await this.repository.findOne(id);
-        if (!construtoraFiadora) throw new Error('Construtora e Fiadora não encontrada');
+        if (!construtoraFiadora) throw new NotFoundError('Construtora e Fiadora não encontrada');
 
 
         const data = dto.getAll();
@@ -52,7 +53,7 @@ export class ConstrutoraFiadoraService {
             const enderecoRepository = new EnderecoRepository();
             const endereco = await enderecoRepository.findOne(data.enderecoId);
 
-            if (!endereco) throw new Error("Endereço não encontrado");
+            if (!endereco) throw new NotFoundError("Endereço não encontrado");
             construtoraFiadora.endereco = endereco;
         }
 
@@ -60,7 +61,7 @@ export class ConstrutoraFiadoraService {
             const socioRepository = new SocioRepository();
             const socio = await socioRepository.findOne(data.socioId);
 
-            if (!socio) throw new Error("Sócio não encontrado");
+            if (!socio) throw new NotFoundError("Sócio não encontrado");
             construtoraFiadora.socio = socio;
         }
 
@@ -78,7 +79,7 @@ export class ConstrutoraFiadoraService {
     async findOne(id: string) {
         const construtoraFiadora = await this.repository.findOne(id);
         if (!construtoraFiadora) {
-            throw new Error(`Construtora e Fiadora com o ID ${id} não encontrada`);
+            throw new NotFoundError(`Construtora e Fiadora com o ID ${id} não encontrada`);
         }
         const construtoraFiadoraDto = this.toImobiliariaResponseDto(construtoraFiadora);
         return construtoraFiadoraDto;
@@ -87,7 +88,7 @@ export class ConstrutoraFiadoraService {
     async remove(id: string) {
         const construtoraFiadora = await this.repository.findOne(id);
         if (!construtoraFiadora) {
-            throw new Error(`Construtora e Fiadora com o ID ${id} não encontrada`);
+            throw new NotFoundError(`Construtora e Fiadora com o ID ${id} não encontrada`);
         }
         await this.repository.remove(id);
     }

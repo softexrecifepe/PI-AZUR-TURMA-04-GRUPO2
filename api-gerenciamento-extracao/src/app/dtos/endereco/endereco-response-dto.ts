@@ -7,4 +7,5 @@ export type EnderecoResponseDto = {
     cidade: string;
     estado: string;
     cep: string;
+    complemento: string;
 }

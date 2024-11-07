@@ -4,6 +4,7 @@ import { UpdateAquisicaoImovelRequestDto } from "../dtos/aquisicao-imovel/update
 import { AquisicaoImovel } from "../models/aquisicao-imovel.model";
 import { AquisicaoImovelRepository } from "../repositories/aquisicao-imovel.repository";
 import { ImovelRepository } from "../repositories/imovel.repository";
+import { NotFoundError } from "../errors/not-found.error";
 
 export class AquisicaoImovelService {
     private repository: AquisicaoImovelRepository;
@@ -18,7 +19,7 @@ export class AquisicaoImovelService {
         const imovelRepository = new ImovelRepository();
         const imovel = await imovelRepository.findOne(data.imovelId)
 
-        if (!imovel) throw new Error("Imóvel não encontrado")
+        if (!imovel) throw new NotFoundError("Imóvel não encontrado")
 
 
         const aquisicaoImovel = new AquisicaoImovel();
@@ -42,7 +43,7 @@ export class AquisicaoImovelService {
 
     async update(id: string, dto: UpdateAquisicaoImovelRequestDto) {
         const aquisicaoImovel = await this.repository.findOne(id);
-        if (!aquisicaoImovel) throw new Error('Aquisição do Imóvel não encontrada');
+        if (!aquisicaoImovel) throw new NotFoundError('Aquisição do Imóvel não encontrada');
 
         const data = dto.getAll();
 
@@ -51,7 +52,7 @@ export class AquisicaoImovelService {
             const imovelRepository = new ImovelRepository();
             const imovel = await imovelRepository.findOne(data.imovelId);
 
-            if (!imovel) throw new Error("Imóvel não encontrado");
+            if (!imovel) throw new NotFoundError("Imóvel não encontrado");
             aquisicaoImovel.imovel = imovel;
         }
 
@@ -75,7 +76,7 @@ export class AquisicaoImovelService {
     async findOne(id: string) {
         const aquisicao_imovel = await this.repository.findOne(id);
         if (!aquisicao_imovel) {
-            throw new Error(`Aquisição Imóvel com ID ${id} não encontrado`);
+            throw new NotFoundError(`Aquisição Imóvel com ID ${id} não encontrado`);
         }
         const aquisicao_imoveldto = this.toAquisicaoImovelResponseDto(aquisicao_imovel);
         return aquisicao_imoveldto;
@@ -85,7 +86,7 @@ export class AquisicaoImovelService {
     async remove(id: string) {
         const aquisicao_imovel = await this.repository.findOne(id);
         if (!aquisicao_imovel) {
-            throw new Error(`Aquisição Imóvel com ID ${id} não encontrado`);
+            throw new NotFoundError(`Aquisição Imóvel com ID ${id} não encontrado`);
         }
         await this.repository.remove(id);
     }

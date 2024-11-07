@@ -1,6 +1,7 @@
 import { CreateEnderecoRequestDto } from "../dtos/endereco/create-endereco-request-dto";
 import { EnderecoResponseDto } from "../dtos/endereco/endereco-response-dto";
 import { UpdateEnderecoRequestDto } from "../dtos/endereco/update-endereco-request-dto";
+import { NotFoundError } from "../errors/not-found.error";
 import { Endereco } from "../models/endereco.model";
 import { EnderecoRepository } from "../repositories/endereco.repository";
 
@@ -14,21 +15,18 @@ export class EnderecoService {
 
     async create(dto: CreateEnderecoRequestDto) {
         const data = dto.getAll();
-
+        
         const endereco = new Endereco();
-        endereco.rua = data.rua;
-        endereco.numero = data.numero;
-        endereco.cidade = data.cidade;
-        endereco.cep = data.cep;
-        endereco.estado = data.estado;
-        endereco.bairro = data.bairro
-        return await this.repository.create(endereco);
+        Object.assign(endereco, data);
+        const enderecoCreate = await this.repository.create(endereco);
+        return this.toEnderecoResponseDto(enderecoCreate);
+        
 
     }
 
     async update(id: string, dto: UpdateEnderecoRequestDto) {
         const endereco = await this.repository.findOne(id);
-        if (!endereco) throw new Error('Endereço não encontrado');
+        if (!endereco) throw new NotFoundError('Endereço não encontrado');
 
         Object.assign(endereco, dto.getAll());
         const enderecoUpdate = await this.repository.update(id, endereco);
@@ -38,7 +36,7 @@ export class EnderecoService {
     async findOne(id: string){
         const endereco = await this.repository.findOne(id);
         if (!endereco) {
-            throw new Error(`Endereço com ID ${id} não encontrado`);
+            throw new NotFoundError(`Endereço com ID ${id} não encontrado`);
         }
         const enderecodto = this.toEnderecoResponseDto(endereco);
         return enderecodto;
@@ -47,7 +45,7 @@ export class EnderecoService {
     async remove(id: string){
         const endereco = await this.repository.findOne(id);
         if (!endereco) {
-            throw new Error(`Endereço com ID ${id} não encontrado`);
+            throw new NotFoundError(`Endereço com ID ${id} não encontrado`);
         }
         await this.repository.remove(id);
     }
@@ -61,10 +59,11 @@ export class EnderecoService {
         bairro,
         cidade,
         estado,
-        cep
+        cep,
+        complemento
 
     }: Endereco): EnderecoResponseDto {
-        return { id,created_at, rua, numero, bairro, cidade, estado, cep };
+        return { id,created_at, rua, numero, bairro, cidade, estado, cep, complemento };
     }
 
 

@@ -20,12 +20,12 @@ export class VendedorService{
         const enderecoRepository = new EnderecoRepository();
         const endereco = await enderecoRepository.findOne(data.enderecoId)
 
-        if (!endereco) throw new Error("Endereço não encontrado")
+        if (!endereco) throw new NotFoundError("Endereço não encontrado")
 
         const socioRepository = new SocioRepository();
         const socio = await socioRepository.findOne(data.socioId)
 
-        if (!socio) throw new Error("Socio não encontrado")
+        if (!socio) throw new NotFoundError("Socio não encontrado")
 
         const vendedor = new Vendedor();
         vendedor.nomeImobiliaria = data.nomeImobiliaria;
@@ -50,7 +50,7 @@ export class VendedorService{
             const enderecoRepository = new EnderecoRepository();
             const endereco = await enderecoRepository.findOne(data.enderecoId);
 
-            if (!endereco) throw new Error("Endereço não encontrado");
+            if (!endereco) throw new NotFoundError("Endereço não encontrado");
             vendedor.endereco = endereco;
         }
 
@@ -58,7 +58,7 @@ export class VendedorService{
             const socioRepository = new SocioRepository();
             const socio = await socioRepository.findOne(data.socioId);
 
-            if (!socio) throw new Error("Sócio não encontrado");
+            if (!socio) throw new NotFoundError("Sócio não encontrado");
             vendedor.socio = socio;
         }
 

@@ -23,7 +23,12 @@ const createEnderecoSchema = z.object({
     .max(50, "Estado pode ter no máximo 50 caracteres"),
   
   cep: z.string()
-    .regex(/^\d{5}-\d{3}$/, "CEP deve estar no formato XXXXX-XXX")
+    .regex(/^\d{5}-\d{3}$/, "CEP deve estar no formato XXXXX-XXX"),
+
+  complemento: z.string()
+    .min(1, "Rua é obrigatória")
+    .max(255, "Rua pode ter no máximo 255 caracteres").optional()
+    
 });
 
 export class CreateEnderecoRequestDto extends AbstractDTO<typeof createEnderecoSchema> {
