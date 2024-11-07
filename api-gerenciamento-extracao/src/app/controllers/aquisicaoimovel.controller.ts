@@ -21,15 +21,15 @@ export class AquisicaoController extends BaseController<AquisicaoImovelService>{
             ...req.body
         });
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Aquisição Imóvel atualizado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Aquisição Imóvel atualizado com sucesso", 200);
     }
     async findOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Aquisição Imóvel encontrado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Aquisição Imóvel encontrado com sucesso", 200);
     }
 
     async remove(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Aquisição Imóvel removido com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Aquisição Imóvel removido com sucesso", 200);
     }
 }

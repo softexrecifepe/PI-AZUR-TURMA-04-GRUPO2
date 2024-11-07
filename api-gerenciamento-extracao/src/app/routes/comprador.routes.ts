@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { CompradorController } from "../controllers/comprador";
+import { CompradorController } from "../controllers/comprador.controller";
 
 const compradorRoutes = Router();
 const compradorController = new CompradorController();

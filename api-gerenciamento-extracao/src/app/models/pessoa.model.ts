@@ -10,6 +10,9 @@ export class Pessoa extends BaseEntity {
 
     @Column({ type: 'varchar', length: 65 })
     nacionalidade: string;
+    
+    @Column({ type: 'varchar', length: 100, unique: true })
+    email: string;
 
     @Column({ type: 'date' })
     dataNascimento: Date;
@@ -26,14 +29,20 @@ export class Pessoa extends BaseEntity {
     @Column({type: 'date' , nullable: false})
     dataExpedicao: Date;
 
-    @Column({type: 'varchar', length: 100, unique: true})
+    @Column({type: 'varchar', length: 100})
     orgaoExpedidor: string;
 
     @Column({ type: 'enum', enum: EstadoCivil })
     estadoCivil: EstadoCivil;
 
-    @Column({type: 'varchar', length: 100})
-    regimeComunhao: string; 
+    @Column({type: 'varchar', length: 100, nullable: true })
+    regimeComunhao?: string; 
+
+    @Column({ type: 'varchar', length: 255 })
+    nome_mae: string;
+
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    nome_pai?: string;
 
     @ManyToOne(() => Endereco)
     @JoinColumn({name: 'endereco_id'})

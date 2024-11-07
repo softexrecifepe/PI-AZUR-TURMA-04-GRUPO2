@@ -3,6 +3,8 @@ import { ImobiliariaResponseDto } from "../dtos/empresaImobiliaria/empresaImobil
 import { UpdateImobiliariaRequestDto } from "../dtos/empresaImobiliaria/update-empresaImobiliaria-request-dto";
 import { NotFoundError } from "../errors/not-found.error";
 import { Vendedor } from "../models/vendedor.model";
+import { EnderecoRepository } from "../repositories/endereco.repository";
+import { SocioRepository } from "../repositories/socio.repository";
 import { VendedorRepository } from "../repositories/vendedor.repository";
 
 export class VendedorService{ 
@@ -15,9 +17,24 @@ export class VendedorService{
     async create(dto: CreateImobiliariaRequestDto){
         const data = dto.getAll();
 
+        const enderecoRepository = new EnderecoRepository();
+        const endereco = await enderecoRepository.findOne(data.enderecoId)
+
+        if (!endereco) throw new Error("Endereço não encontrado")
+
+        const socioRepository = new SocioRepository();
+        const socio = await socioRepository.findOne(data.socioId)
+
+        if (!socio) throw new Error("Socio não encontrado")
+
         const vendedor = new Vendedor();
         vendedor.nomeImobiliaria = data.nomeImobiliaria;
         vendedor.cnpj = data.cnpj;
+        vendedor.dataSessao = data.dataSessao;
+        vendedor.email = data.email;
+        vendedor.numNire = data.numNire;
+        vendedor.endereco = endereco;
+        vendedor.socio = socio;
 
         const savedEmpresaImobiliaria = await this.repository.create(vendedor);
         return this.toVendedorResponseDto(savedEmpresaImobiliaria);
@@ -27,7 +44,30 @@ export class VendedorService{
         const vendedor = await this.repository.findOne(id);
         if (!vendedor) throw new NotFoundError('Empresa não encontrada');
 
-        Object.assign(vendedor, dto.getAll());
+        const data = dto.getAll();
+
+        if (data.enderecoId) {
+            const enderecoRepository = new EnderecoRepository();
+            const endereco = await enderecoRepository.findOne(data.enderecoId);
+
+            if (!endereco) throw new Error("Endereço não encontrado");
+            vendedor.endereco = endereco;
+        }
+
+        if (data.socioId) {
+            const socioRepository = new SocioRepository();
+            const socio = await socioRepository.findOne(data.socioId);
+
+            if (!socio) throw new Error("Sócio não encontrado");
+            vendedor.socio = socio;
+        }
+
+        vendedor.nomeImobiliaria = data.nomeImobiliaria ?? vendedor.nomeImobiliaria;
+        vendedor.cnpj = data.cnpj ?? vendedor.cnpj;
+        vendedor.dataSessao = data.dataSessao ?? vendedor.dataSessao;
+        vendedor.email = data.email ?? vendedor.email;
+        vendedor.numNire = data.numNire ?? vendedor.numNire;
+
         const vendedrUpdate = await this.repository.update(id, vendedor);
         return this.toVendedorResponseDto(vendedrUpdate);
     }
@@ -49,7 +89,12 @@ export class VendedorService{
             id: vendedor.id,
             created_at: vendedor.created_at,
             nomeImobiliaria: vendedor.nomeImobiliaria,
-            cnpj: vendedor.cnpj
+            cnpj: vendedor.cnpj,
+            email: vendedor.email,
+            numNire: vendedor.numNire,
+            dataSessao: vendedor.dataSessao,
+            endereco: vendedor.endereco,
+            socio: vendedor.socio
         }
     }
 

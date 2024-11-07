@@ -27,7 +27,7 @@ export class VendedorController extends BaseController<VendedorService> {
 
     async findOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Vendedor encontrado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Vendedor encontrado com sucesso", 200);
     }
 
 }

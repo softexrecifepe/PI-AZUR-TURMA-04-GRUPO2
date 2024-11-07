@@ -21,16 +21,16 @@ export class EnderecoController extends BaseController<EnderecoService> {
             ...req.body
         });
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Endereço atualizado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Endereço atualizado com sucesso", 200);
     }
   
     async findOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Representante encontrado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Representante encontrado com sucesso", 200);
     } 
      async remove(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Representante removido com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Representante removido com sucesso", 200);
     } 
      
 }

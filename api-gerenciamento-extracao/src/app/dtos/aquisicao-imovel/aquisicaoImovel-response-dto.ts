@@ -14,5 +14,5 @@ export type AquisicaoImovelResponseDto = {
     valorLeilao: number;
     sistemaAmortizacao: string;
     attSaldoDevedor: number;
-    // imovel: Imovel;
+    imovel: Imovel;
 }

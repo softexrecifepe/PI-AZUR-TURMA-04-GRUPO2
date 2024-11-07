@@ -22,7 +22,7 @@ export const AppDataSource = new DataSource({
     // Somente use synchronize em ambiente de desenvolvimento, desabilite em produção
     synchronize: NODE_ENV === "dev" ? false : false,
     logging: NODE_ENV === "dev" ? true : false,
-    entities: [Socio, Representante, Endereco, Imovel],
+    entities: [Endereco, Socio],
     migrations: ["src/database/migrations/*.ts"],
     subscribers: []
 });

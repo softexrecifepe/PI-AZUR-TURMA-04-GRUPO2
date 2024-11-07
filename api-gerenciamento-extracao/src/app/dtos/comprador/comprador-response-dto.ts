@@ -1,4 +1,5 @@
-import { Comprador } from "../../models/comprador.model";
+import { Endereco } from "../../models/endereco.model";
+import { EstadoCivil } from "../../models/enums/estadoCivil.enum";
 
 export type CompradorResponseDto = {
     id: string;
@@ -7,14 +8,16 @@ export type CompradorResponseDto = {
     nacionalidade: string;
     dataNascimento: Date;
     profissao: string;
-    filiacao: string;
+    nome_mae: string;
+    nome_pai: string;
     email: string;
-    documento: string;
+    numDocumento: string;
     orgaoExpedidor: string;
     dataExpedicao: Date;
+    regimeComunhao: string;
     cpf: string;
-    estadoCivil: string;
-    endereco: string;
+    estadoCivil: EstadoCivil;
+    endereco: Endereco;
     formaPagamento: string;
     rendaComprovada: number;
     rendaNaoComprovada: number;

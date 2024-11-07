@@ -3,59 +3,106 @@ import { ImobiliariaResponseDto } from "../dtos/empresaImobiliaria/empresaImobil
 import { UpdateImobiliariaRequestDto } from "../dtos/empresaImobiliaria/update-empresaImobiliaria-request-dto";
 import { ConstrutoraFiadora } from "../models/construtoraFiadora.model";
 import { ConstrutoraFiadoraRepository } from "../repositories/construtoraFiadora.repository";
+import { EnderecoRepository } from "../repositories/endereco.repository";
+import { SocioRepository } from "../repositories/socio.repository";
 
 
-export class ConstrutoraFiadoraService{ 
+export class ConstrutoraFiadoraService {
     private repository: ConstrutoraFiadoraRepository;
 
-    constructor(){
+    constructor() {
         this.repository = new ConstrutoraFiadoraRepository();
     }
 
-    async create(dto: CreateImobiliariaRequestDto){
+    async create(dto: CreateImobiliariaRequestDto) {
         const data = dto.getAll();
+
+        const enderecoRepository = new EnderecoRepository();
+        const endereco = await enderecoRepository.findOne(data.enderecoId)
+
+        if (!endereco) throw new Error("Endereço não encontrado")
+
+
+        const socioRepository = new SocioRepository();
+        const socio = await socioRepository.findOne(data.socioId)
+
+        if (!socio) throw new Error("Socio não encontrado")
 
         const construtoraFiadora = new ConstrutoraFiadora();
         construtoraFiadora.nomeImobiliaria = data.nomeImobiliaria;
         construtoraFiadora.cnpj = data.cnpj;
+        construtoraFiadora.dataSessao = data.dataSessao;
+        construtoraFiadora.email = data.email;
+        construtoraFiadora.numNire = data.numNire;
+        construtoraFiadora.endereco = endereco;
+        construtoraFiadora.socio = socio;
 
         const savedConstrutoraFiadora = await this.repository.create(construtoraFiadora);
         return this.toImobiliariaResponseDto(savedConstrutoraFiadora);
     }
 
-    async update(id: string, dto: UpdateImobiliariaRequestDto): Promise<ConstrutoraFiadora>{
+    async update(id: string, dto: UpdateImobiliariaRequestDto): Promise<ConstrutoraFiadora> {
         const construtoraFiadora = await this.repository.findOne(id);
-        if (!construtoraFiadora) throw new Error ('Construtora e Fiadora não encontrada');
+        if (!construtoraFiadora) throw new Error('Construtora e Fiadora não encontrada');
 
-        Object.assign(construtoraFiadora, dto.getAll());
+
+        const data = dto.getAll();
+
+        if (data.enderecoId) {
+            const enderecoRepository = new EnderecoRepository();
+            const endereco = await enderecoRepository.findOne(data.enderecoId);
+
+            if (!endereco) throw new Error("Endereço não encontrado");
+            construtoraFiadora.endereco = endereco;
+        }
+
+        if (data.socioId) {
+            const socioRepository = new SocioRepository();
+            const socio = await socioRepository.findOne(data.socioId);
+
+            if (!socio) throw new Error("Sócio não encontrado");
+            construtoraFiadora.socio = socio;
+        }
+
+        construtoraFiadora.nomeImobiliaria = data.nomeImobiliaria ?? construtoraFiadora.nomeImobiliaria;
+        construtoraFiadora.cnpj = data.cnpj ?? construtoraFiadora.cnpj;
+        construtoraFiadora.dataSessao = data.dataSessao ?? construtoraFiadora.dataSessao;
+        construtoraFiadora.email = data.email ?? construtoraFiadora.email;
+        construtoraFiadora.numNire = data.numNire ?? construtoraFiadora.numNire;
+
         const construtoraFiadoraUpdate = await this.repository.update(id, construtoraFiadora);
         const construtoraFiadoraDto = this.toImobiliariaResponseDto(construtoraFiadoraUpdate);
         return construtoraFiadoraDto;
     }
 
-    async findOne(id: string){
+    async findOne(id: string) {
         const construtoraFiadora = await this.repository.findOne(id);
-        if (!construtoraFiadora){
-            throw new Error (`Construtora e Fiadora com o ID ${id} não encontrada`);
+        if (!construtoraFiadora) {
+            throw new Error(`Construtora e Fiadora com o ID ${id} não encontrada`);
         }
         const construtoraFiadoraDto = this.toImobiliariaResponseDto(construtoraFiadora);
         return construtoraFiadoraDto;
     }
 
-    async remove(id: string){
+    async remove(id: string) {
         const construtoraFiadora = await this.repository.findOne(id);
-        if (!construtoraFiadora){
-            throw new Error (`Construtora e Fiadora com o ID ${id} não encontrada`);
+        if (!construtoraFiadora) {
+            throw new Error(`Construtora e Fiadora com o ID ${id} não encontrada`);
         }
         await this.repository.remove(id);
     }
 
-    private toImobiliariaResponseDto(construtoraFiadora: ConstrutoraFiadora): ImobiliariaResponseDto{
-        return{
+    private toImobiliariaResponseDto(construtoraFiadora: ConstrutoraFiadora): ImobiliariaResponseDto {
+        return {
             id: construtoraFiadora.id,
             created_at: construtoraFiadora.created_at,
             nomeImobiliaria: construtoraFiadora.nomeImobiliaria,
-            cnpj: construtoraFiadora.cnpj
+            cnpj: construtoraFiadora.cnpj,
+            email: construtoraFiadora.email,
+            numNire: construtoraFiadora.numNire,
+            dataSessao: construtoraFiadora.dataSessao,
+            endereco: construtoraFiadora.endereco,
+            socio: construtoraFiadora.socio
         }
     }
 

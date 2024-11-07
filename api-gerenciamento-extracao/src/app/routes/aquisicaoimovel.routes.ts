@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { AquisicaoController } from "../controllers/aquisicaoimovel";
+import { AquisicaoController } from "../controllers/aquisicaoimovel.controller";
 
 const aquisicaoImovelRoutes = Router();
 const aquisicaoController = new AquisicaoController();

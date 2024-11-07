@@ -22,16 +22,16 @@ export class ImovelController extends BaseController<ImovelService> {
             ...req.body
         });
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Imovel atualizado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Imovel atualizado com sucesso", 200);
     }
   
     async findOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Imovel encontrado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Imovel encontrado com sucesso", 200);
     } 
      async remove(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Imovel removido com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Imovel removido com sucesso", 200);
     } 
      
 }

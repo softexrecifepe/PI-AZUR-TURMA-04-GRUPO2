@@ -46,11 +46,7 @@ const updateAquisicaoImovelSchema = z.object({
     .positive("Atualização do saldo devedor deve ser positiva")
     .max(9999999999.99, "Atualização do saldo devedor é muito alta").optional(),
 
-  imovel: z.object({
-    id: z.number().positive("ID do imóvel deve ser positivo") // Supondo que Imovel tenha um campo ID
-  }).optional(), // Dependendo de como a relação é criada, pode ser opcional.
-
-  imovelId: z.string().uuid("O ID do imóvel deve ser um UUID válido"),
+  imovelId: z.string().uuid("O ID do imóvel deve ser um UUID válido").optional(),
 });
 
 export class UpdateAquisicaoImovelRequestDto extends AbstractDTO<typeof updateAquisicaoImovelSchema> {

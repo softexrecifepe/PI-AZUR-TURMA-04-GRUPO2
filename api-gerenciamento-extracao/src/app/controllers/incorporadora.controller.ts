@@ -27,7 +27,7 @@ export class IncorporadoraController extends BaseController<IncorporadoraService
 
     async findOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Incorporadora encontrado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Incorporadora encontrado com sucesso", 200);
     }
 
 }

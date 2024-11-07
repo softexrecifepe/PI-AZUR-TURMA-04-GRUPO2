@@ -7,8 +7,13 @@ export type RepresentanteResponseDTO = {
     nacionalidade: string;
     dataNascimento: Date;
     profissao: string;
-    cpf: string;
-    estadoCivil: EstadoCivil;
+    email: string;
     numDocumento: string;
     dataExpedicao: Date;
+    orgaoExpedidor: string;
+    regimeComunhao: string;
+    cpf: string;
+    estadoCivil: EstadoCivil;
+    nome_mae: string;
+    nome_pai?: string;
 }

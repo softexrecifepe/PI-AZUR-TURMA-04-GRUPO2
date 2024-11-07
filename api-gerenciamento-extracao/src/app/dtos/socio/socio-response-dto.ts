@@ -8,8 +8,10 @@ export type SocioResponseDto = {
     dataNascimento: Date;
     profissao: string;
     email: string;
-    numeroCarteiraFuncional: string;
-    dataExpedicaoCREA: Date;
+    numDocumento: string;
+    dataExpedicao: Date;
+    orgaoExpedidor: string;
+    regimeComunhao: string;
     cpf: string;
     estadoCivil: EstadoCivil;
     nome_mae: string;

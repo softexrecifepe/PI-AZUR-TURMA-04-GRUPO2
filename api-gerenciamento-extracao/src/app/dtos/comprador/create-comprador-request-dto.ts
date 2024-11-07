@@ -1,5 +1,6 @@
 import z from "zod";
 import { AbstractDTO } from "../abstract.dto";
+import { EstadoCivil } from "../../models/enums/estadoCivil.enum";
 
 const createCompradorSchema = z.object({
   nome: z.string()
@@ -17,15 +18,14 @@ const createCompradorSchema = z.object({
     .min(3, "Profissão é obrigatória e deve ter no mínimo 3 caracteres")
     .max(255, "Profissão pode ter no máximo 255 caracteres"),
 
-  filiacao: z.string()
-    .min(3, "Filiação é obrigatória e deve ter no mínimo 3 caracteres")
-    .max(255, "Filiação pode ter no máximo 255 caracteres"),
+  nome_mae: z.string().min(1, "Nome da mãe é obrigatório").max(255, "Nome da mãe pode ter no máximo 255 caracteres"),
+  nome_pai: z.string().max(255, "Nome do pai pode ter no máximo 255 caracteres").optional(),
 
   email: z.string()
     .email("Email deve ser um endereço de e-mail válido")
     .max(255, "Email pode ter no máximo 255 caracteres"),
 
-  documento: z.string()
+  numDocumento: z.string()
     .min(3, "Documento é obrigatório e deve ter no mínimo 3 caracteres")
     .max(20, "Documento pode ter no máximo 20 caracteres"),
 
@@ -33,19 +33,17 @@ const createCompradorSchema = z.object({
     .min(2, "Órgão Expedidor é obrigatório e deve ter no mínimo 2 caracteres")
     .max(50, "Órgão Expedidor pode ter no máximo 50 caracteres"),
 
+  regimeComunhao: z.string().min(3, "Precisa ter 3").max(100, "O máximo é 100"),
+
   dataExpedicao: z.date()
     .refine(date => date <= new Date(), "Data de expedição deve ser uma data no passado"),
 
   cpf: z.string()
     .regex(/^\d{11}$/, "CPF deve conter 11 dígitos numéricos"),
 
-  estadoCivil: z.string()
-    .min(3, "Estado civil é obrigatório e deve ter no mínimo 3 caracteres")
-    .max(255, "Estado civil pode ter no máximo 255 caracteres"),
+  estadoCivil: z.nativeEnum(EstadoCivil, { errorMap: () => ({ message: "Estado civil inválido" }) }),
 
-  endereco: z.string()
-    .min(10, "Endereço é obrigatório e deve ter no mínimo 10 caracteres")
-    .max(255, "Endereço pode ter no máximo 255 caracteres"),
+  enderecoId: z.string().uuid("O ID do endereço deve ser um UUID válido"),
 
   formaPagamento: z.string()
     .min(3, "Forma de pagamento é obrigatória e deve ter no mínimo 3 caracteres")

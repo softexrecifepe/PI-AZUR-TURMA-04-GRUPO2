@@ -9,7 +9,7 @@ export type ImobiliariaResponseDto = {
     cnpj: string;
     email: string;
     numNire: string;
-    dataSessao: string;
-    enderecoId: string;
-    socioId: string;
+    dataSessao: Date;
+    endereco: Endereco;
+    socio: Socio;
 }

@@ -21,8 +21,10 @@ export class CredoraController extends BaseController <CredoraService>{
             ...req.body
         });
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Credora atualizada com sucesso!!");
+        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Credora atualizada com sucesso!!", 200);
 
     }
+
+    
 
 }

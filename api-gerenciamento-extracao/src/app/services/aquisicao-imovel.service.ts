@@ -90,7 +90,7 @@ export class AquisicaoImovelService {
         await this.repository.remove(id);
     }
 
-    private toAquisicaoImovelResponseDto({ id, created_at, valorAquisicao, recursosProprios, recursosFGTS, financiamentoCredora, origemRecursos, normaRegulamentadora, valorAcessorias, valorDivida, valorLeilao, sistemaAmortizacao, attSaldoDevedor }: AquisicaoImovel): AquisicaoImovelResponseDto {
-        return { id, created_at, valorAquisicao, recursosProprios, recursosFGTS, financiamentoCredora, origemRecursos, normaRegulamentadora, valorAcessorias, valorDivida, valorLeilao, sistemaAmortizacao, attSaldoDevedor };
+    private toAquisicaoImovelResponseDto({ id, created_at, valorAquisicao, recursosProprios, recursosFGTS, financiamentoCredora, origemRecursos, normaRegulamentadora, valorAcessorias, valorDivida, valorLeilao, sistemaAmortizacao, attSaldoDevedor, imovel }: AquisicaoImovel): AquisicaoImovelResponseDto {
+        return { id, created_at, valorAquisicao, recursosProprios, recursosFGTS, financiamentoCredora, origemRecursos, normaRegulamentadora, valorAcessorias, valorDivida, valorLeilao, sistemaAmortizacao, attSaldoDevedor, imovel };
     }
 }

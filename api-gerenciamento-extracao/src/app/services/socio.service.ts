@@ -44,7 +44,7 @@ export class SocioService {
         await this.repository.remove(id);
     }
 
-    private toSocioResponseDto({ id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numeroCarteiraFuncional, dataExpedicaoCREA, cpf, estadoCivil, nome_mae, nome_pai }: Socio): SocioResponseDto {
-        return { id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numeroCarteiraFuncional, dataExpedicaoCREA, cpf, estadoCivil, nome_mae, nome_pai };
+    private toSocioResponseDto({ id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numDocumento, dataExpedicao, orgaoExpedidor, regimeComunhao, cpf, estadoCivil, nome_mae, nome_pai }: Socio): SocioResponseDto {
+        return { id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numDocumento, dataExpedicao, orgaoExpedidor, regimeComunhao, cpf, estadoCivil, nome_mae, nome_pai };
     }
 }

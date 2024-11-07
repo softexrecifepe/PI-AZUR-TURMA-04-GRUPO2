@@ -21,15 +21,15 @@ export class CompradorController extends BaseController<CompradorService>{
             ...req.body
         });
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Usuário Comprador atualizado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.update(id, dto), "Usuário Comprador atualizado com sucesso", 200);
     }
     async findOne(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Usuário Comprador encontrado com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Usuário Comprador encontrado com sucesso", 200);
     }
 
     async remove(req: Request, res: Response, next: NextFunction) {
         const id = req.params.id;
-        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Usuário Comprador removido com sucesso");
+        return this.handleRequest(req, res, next, async () => this.service.remove(id), "Usuário Comprador removido com sucesso", 200);
     }
 }

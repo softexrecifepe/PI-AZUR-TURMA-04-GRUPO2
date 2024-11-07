@@ -41,19 +41,6 @@ export class AquisicaoImovel extends BaseEntity {
     @JoinColumn({ name: 'imovel_id' }) 
     imovel: Imovel;
 
-
-    
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
