@@ -17,7 +17,7 @@ export class EmpresaImobiliaria extends BaseEntity {
     @Column({type: 'varchar', length: 65})
     numNire: string;
 
-    @Column({type: 'date', length: 65})
+    @Column({type: 'date'})
     dataSessao: Date;
 
     @ManyToOne(() => Endereco)

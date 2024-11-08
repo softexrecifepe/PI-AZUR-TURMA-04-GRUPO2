@@ -22,6 +22,7 @@ const createSocioSchema = z.object({
   regimeComunhao: z.string().min(3, "Precisa ter 3").max(100, "O máximo é 100").optional(),
   nome_mae: z.string().min(1, "Nome da mãe é obrigatório").max(255, "Nome da mãe pode ter no máximo 255 caracteres"),
   nome_pai: z.string().max(255, "Nome do pai pode ter no máximo 255 caracteres").optional(),
+  enderecoId: z.string().uuid("O ID do imóvel deve ser um UUID válido"),
 })
 
 

@@ -28,7 +28,8 @@ export class ImovelService {
         imovel.areaConstruida = data.areaConstruida;
         imovel.areaPrivada = data.areaPrivada;
         imovel.areaComum = data.areaComum;
-        return await this.repository.create(imovel);
+        const createImovel =  await this.repository.create(imovel);
+        return this.toImovelResponseDto(createImovel);
     }
 
     async update(id: string, dto: UpdateImovelRequestDto) {

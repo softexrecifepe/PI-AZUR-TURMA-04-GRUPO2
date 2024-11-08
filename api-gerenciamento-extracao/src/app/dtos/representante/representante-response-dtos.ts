@@ -1,3 +1,4 @@
+import { Endereco } from "../../models/endereco.model";
 import { EstadoCivil } from "../../models/enums/estadoCivil.enum";
 
 export type RepresentanteResponseDTO = {
@@ -16,4 +17,5 @@ export type RepresentanteResponseDTO = {
     estadoCivil: EstadoCivil;
     nome_mae: string;
     nome_pai?: string;
+    endereco: Endereco;
 }

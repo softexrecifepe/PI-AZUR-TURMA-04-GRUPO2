@@ -3,6 +3,7 @@ import { RepresentanteResponseDTO } from "../dtos/representante/representante-re
 import { UpdateRepresentanteRequestDto } from "../dtos/representante/update-representante-request-dto";
 import { NotFoundError } from "../errors/not-found.error";
 import { Representante } from "../models/representante.model";
+import { EnderecoRepository } from "../repositories/endereco.repository";
 import { RepresentanteRepository } from "../repositories/representante.repository";
 
 export class RepresentanteService {
@@ -14,11 +15,29 @@ export class RepresentanteService {
     }
 
     async create(dto: CreateRepresentanteRequestDto) {
-
         const data = dto.getAll();
 
+        const enderecoRepository = new EnderecoRepository();
+        const endereco = await enderecoRepository.findOne(data.enderecoId)
+
+        if (!endereco) throw new NotFoundError("Endereço não encontrado")
+
         const representante = new Representante();
-        Object.assign(representante, data);
+        representante.endereco = endereco;
+        representante.nome = data.nome;
+        representante.nacionalidade = data.nacionalidade;
+        representante.email = data.email;
+        representante.dataNascimento = data.dataNascimento;
+        representante.profissao = data.profissao;
+        representante.cpf = data.cpf;
+        representante.numDocumento = data.numDocumento;
+        representante.dataExpedicao = data.dataExpedicao;
+        representante.orgaoExpedidor = data.orgaoExpedidor;
+        representante.estadoCivil = data.estadoCivil;
+        representante.regimeComunhao = data.regimeComunhao;
+        representante.nome_mae = data.nome_mae;
+        representante.nome_pai = data.nome_pai;
+
         const representanteCreate = await this.repository.create(representante);
         return this.toRepresentanteResponseDto(representanteCreate);
     }
@@ -48,10 +67,11 @@ export class RepresentanteService {
         cpf, 
         estadoCivil, 
         nome_mae, 
-        nome_pai
+        nome_pai,
+        endereco
 
     }: Representante): RepresentanteResponseDTO {
-        return { id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numDocumento, dataExpedicao, orgaoExpedidor, regimeComunhao, cpf, estadoCivil, nome_mae, nome_pai };
+        return { id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numDocumento, dataExpedicao, orgaoExpedidor, regimeComunhao, cpf, estadoCivil, nome_mae, nome_pai, endereco };
     }
 
 

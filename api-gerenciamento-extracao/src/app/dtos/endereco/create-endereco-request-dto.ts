@@ -23,7 +23,7 @@ const createEnderecoSchema = z.object({
     .max(50, "Estado pode ter no máximo 50 caracteres"),
   
   cep: z.string()
-    .regex(/^\d{5}-\d{3}$/, "CEP deve estar no formato XXXXX-XXX"),
+    .min(8, "CEP deve ter no mínimo 8 caracteres").max(8, "CEP deve ter no máximo 8 caracteres"),
 
   complemento: z.string()
     .min(1, "Rua é obrigatória")
