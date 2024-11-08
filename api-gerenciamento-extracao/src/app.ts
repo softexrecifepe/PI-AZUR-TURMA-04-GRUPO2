@@ -11,6 +11,13 @@ import representanteRoutes from './app/routes/representante.routes';
 import {responseError} from './app/middlewares/response-error';
 import enderecoRoutes from './app/routes/endereco.routes';
 import imovelRoutes from './app/routes/imovel.routes';
+import vendedorRoutes from './app/routes/vendedor.routes';
+import incorporadoraRoutes from './app/routes/incorporadora.routes';
+import empreendedorFiadorRoutes from './app/routes/empreendedorFiador.routes';
+import credoraRoutes from './app/routes/credora.routes';
+import construtoraFiadoraRoutes from './app/routes/construtoraFiadora.routes';
+import compradorRoutes from './app/routes/comprador.routes';
+import aquisicaoImovelRoutes from './app/routes/aquisicaoimovel.routes';
  
 const app = express();
  
@@ -23,8 +30,15 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.use('/api', socioRoutes);
 app.use('/api', representanteRoutes);
-app.use('/api', enderecoRoutes)
-app.use('/api', imovelRoutes)
+app.use('/api', enderecoRoutes);
+app.use('/api', imovelRoutes);
+app.use('/api', vendedorRoutes);
+app.use('/api', incorporadoraRoutes);
+app.use('/api', empreendedorFiadorRoutes);
+app.use('/api', credoraRoutes);
+app.use('/api', construtoraFiadoraRoutes);
+app.use('/api', compradorRoutes);
+app.use('/api', aquisicaoImovelRoutes);
 
 
 app.get("terms", (req: Request, res: Response) => {
@@ -34,7 +48,7 @@ app.get("terms", (req: Request, res: Response) => {
 })
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    responseError(error, req, res, next)
+    responseError(error, req, res, next)
 });
 
  

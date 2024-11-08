@@ -11,8 +11,8 @@ const updateRepresentanteSchema = z.object({
     }, z.date()).refine(date => date <= new Date(), "Data de nascimento não pode ser no futuro").optional(),
     profissao: z.string().min(1, "Profissão é obrigatória").max(100, "Profissão pode ter no máximo 100 caracteres").optional(),
     email: z.string().email("Email inválido").max(100, "Email pode ter no máximo 100 caracteres").optional(),
-    numeroCarteiraFuncional: z.string().min(1, "Número da carteira funcional é obrigatório").max(50, "Número da carteira funcional pode ter no máximo 50 caracteres").optional(),
-    dataExpedicaoCREA: z.preprocess((arg) => {
+    numDocumento: z.string().min(1, "Número da carteira funcional é obrigatório").max(50, "Número da carteira funcional pode ter no máximo 50 caracteres").optional(),
+    dataExpedicao: z.preprocess((arg) => {
         if (typeof arg === "string") return new Date(arg);
         return arg;
     }, z.date()).refine(date => date <= new Date(), "Data de expedição não pode ser no futuro").optional(),

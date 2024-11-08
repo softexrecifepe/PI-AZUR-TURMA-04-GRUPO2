@@ -46,7 +46,29 @@ export class RepresentanteService {
         const representante = await this.repository.findOne(id);
         if (!representante) throw new NotFoundError('Sócio não encontrado');
 
-        Object.assign(representante, dto.getAll());
+        const data = dto.getAll();
+
+        if (data.enderecoId) {
+            const enderecoRepository = new EnderecoRepository();
+            const endereco = await enderecoRepository.findOne(data.enderecoId);
+
+            if (!endereco) throw new NotFoundError("Endereço não encontrado");
+            representante.endereco = endereco;
+        }
+
+        representante.nome = data.nome ?? representante.nome;
+        representante.nacionalidade = data.nacionalidade ?? representante.nacionalidade;
+        representante.email = data.email ?? representante.email;
+        representante.dataNascimento = data.dataNascimento ?? representante.dataNascimento;
+        representante.profissao = data.profissao ?? representante.profissao;
+        representante.cpf = data.cpf ?? representante.cpf;
+        representante.numDocumento = data.numDocumento ?? representante.numDocumento;
+        representante.dataExpedicao = data.dataExpedicao ?? representante.dataExpedicao;
+        representante.orgaoExpedidor = data.orgaoExpedidor ?? representante.orgaoExpedidor;
+        representante.estadoCivil = data.estadoCivil ?? representante.estadoCivil;
+        representante.regimeComunhao = data.regimeComunhao ?? representante.regimeComunhao;
+        representante.nome_mae = data.nome_mae ?? representante.nome_mae;
+        representante.nome_pai = data.nome_pai ?? representante.nome_pai;
 
         const representanteUpdate = await this.repository.update(id, representante);
         return this.toRepresentanteResponseDto(representanteUpdate);
@@ -54,7 +76,7 @@ export class RepresentanteService {
 
 
 
-    async findOne(id: string){
+    async findOne(id: string) {
         const representante = await this.repository.findOne(id);
         if (!representante) {
             throw new Error(`Representante com ID ${id} não encontrado`);
@@ -64,7 +86,7 @@ export class RepresentanteService {
     }
 
 
-    async remove(id: string){
+    async remove(id: string) {
         const representante = await this.repository.findOne(id);
         if (!representante) {
             throw new Error(`Representante com ID ${id} não encontrado`);
@@ -72,26 +94,26 @@ export class RepresentanteService {
         await this.repository.remove(id);
     }
 
-    async findAll(){
+    async findAll() {
         const representante = await this.repository.findAll();
-        return representante.map((rep)=>this.toRepresentanteResponseDto(rep));
+        return representante.map((rep) => this.toRepresentanteResponseDto(rep));
     }
 
     private toRepresentanteResponseDto({
-        id, 
-        created_at, 
-        nome, 
-        nacionalidade, 
-        dataNascimento, 
-        profissao, 
-        email, 
-        numDocumento, 
-        dataExpedicao, 
-        orgaoExpedidor, 
-        regimeComunhao, 
-        cpf, 
-        estadoCivil, 
-        nome_mae, 
+        id,
+        created_at,
+        nome,
+        nacionalidade,
+        dataNascimento,
+        profissao,
+        email,
+        numDocumento,
+        dataExpedicao,
+        orgaoExpedidor,
+        regimeComunhao,
+        cpf,
+        estadoCivil,
+        nome_mae,
         nome_pai,
         endereco
 

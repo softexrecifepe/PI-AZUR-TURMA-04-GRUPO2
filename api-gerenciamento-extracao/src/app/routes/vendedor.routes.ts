@@ -2,17 +2,20 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { authenticateJWT } from '../middlewares/authenticate-jwt';
 import { VendedorController } from '../controllers/vendedor.controller';
 
-const socioRoutes = Router();
+const vendedorRoutes = Router();
 const vendedorController = new VendedorController();
 
-socioRoutes.post('/vendedor', ((req: Request, res: Response, next: NextFunction) => {
+vendedorRoutes.post('/vendedor', ((req: Request, res: Response, next: NextFunction) => {
     authenticateJWT(req, res, next)
 }), vendedorController.create.bind(vendedorController));
-socioRoutes.patch('/vendedor/:id', ((req: Request, res: Response, next: NextFunction) => {
+vendedorRoutes.patch('/vendedor/:id', ((req: Request, res: Response, next: NextFunction) => {
     authenticateJWT(req, res, next)
 }), vendedorController.update.bind(vendedorController));
-socioRoutes.get('/vendedor/:id', ((req: Request, res: Response, next: NextFunction) => {
+vendedorRoutes.get('/vendedor/:id', ((req: Request, res: Response, next: NextFunction) => {
     authenticateJWT(req, res, next)
 }), vendedorController.findOne.bind(vendedorController));
+vendedorRoutes.delete('/vendedor/:id', ((req: Request, res: Response, next: NextFunction) => {
+    authenticateJWT(req, res, next)
+}), vendedorController.remove.bind(vendedorController));
 
-export default socioRoutes;
+export default vendedorRoutes;

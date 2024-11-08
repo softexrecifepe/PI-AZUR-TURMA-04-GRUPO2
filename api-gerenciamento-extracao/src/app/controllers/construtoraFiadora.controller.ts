@@ -30,4 +30,11 @@ export class ConstrutoraFiadoraController extends BaseController<ConstrutoraFiad
         return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Construtora e Fiadora encontrado com sucesso", 200);
     }
 
+    async remove(req: Request, res: Response, next: NextFunction) {
+        const id = req.params.id;
+        return this.handleRequest(req, res, next, async () => {
+            await this.service.remove(id);
+        }, "Construtora e Fiadora removido com sucesso", 200);
+    }
+
 }

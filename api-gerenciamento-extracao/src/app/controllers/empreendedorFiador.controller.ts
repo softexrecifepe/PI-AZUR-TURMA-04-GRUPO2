@@ -30,4 +30,11 @@ export class EmpreendedorFiadorController extends BaseController<EmpreendedorFia
         return this.handleRequest(req, res, next, async () => this.service.findOne(id), "Empreendedor e Fiador encontrado com sucesso", 200);
     }
 
+    async remove(req: Request, res: Response, next: NextFunction) {
+        const id = req.params.id;
+        return this.handleRequest(req, res, next, async () => {
+            await this.service.remove(id);
+        }, "Empreendedor e Fiador removido com sucesso", 200);
+    }
+
 }
