@@ -52,6 +52,31 @@ export class RepresentanteService {
         return this.toRepresentanteResponseDto(representanteUpdate);
     }
 
+
+
+    async findOne(id: string){
+        const representante = await this.repository.findOne(id);
+        if (!representante) {
+            throw new Error(`Representante com ID ${id} não encontrado`);
+        }
+        const representantedto = this.toRepresentanteResponseDto(representante);
+        return representantedto;
+    }
+
+
+    async remove(id: string){
+        const representante = await this.repository.findOne(id);
+        if (!representante) {
+            throw new Error(`Representante com ID ${id} não encontrado`);
+        }
+        await this.repository.remove(id);
+    }
+
+    async findAll(){
+        const representante = await this.repository.findAll();
+        return representante.map((rep)=>this.toRepresentanteResponseDto(rep));
+    }
+
     private toRepresentanteResponseDto({
         id, 
         created_at, 
@@ -73,8 +98,6 @@ export class RepresentanteService {
     }: Representante): RepresentanteResponseDTO {
         return { id, created_at, nome, nacionalidade, dataNascimento, profissao, email, numDocumento, dataExpedicao, orgaoExpedidor, regimeComunhao, cpf, estadoCivil, nome_mae, nome_pai, endereco };
     }
-
-
-
-
 }
+
+
