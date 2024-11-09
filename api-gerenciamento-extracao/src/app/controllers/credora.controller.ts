@@ -25,6 +25,16 @@ export class CredoraController extends BaseController <CredoraService>{
 
     }
 
+    async findOne(req: Request, res: Response, next: NextFunction){
+        const id = req.params.id;
+        return this.handleRequest(req, res, next, async() => this.service.findOne(id), "Credora encontrada com sucesso!", 200);
     
+    }
+
+    async remove(req: Request, res: Response, next: NextFunction){
+        const id = req.params.id;
+        return this.handleRequest(req, res, next, async() => this.service.remove(id), "Credora removida com sucesso!", 200);
+    
+    }
 
 }
