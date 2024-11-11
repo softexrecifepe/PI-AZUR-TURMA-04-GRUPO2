@@ -78,6 +78,7 @@ export class AquisicaoImovelService {
         if (!aquisicao_imovel) {
             throw new NotFoundError(`Aquisição Imóvel com ID ${id} não encontrado`);
         }
+        
         const aquisicao_imoveldto = this.toAquisicaoImovelResponseDto(aquisicao_imovel);
         return aquisicao_imoveldto;
     }

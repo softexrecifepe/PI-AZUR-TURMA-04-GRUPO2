@@ -50,6 +50,10 @@ export class EnderecoService {
         await this.repository.remove(id);
     }
 
+    async findAll() {
+        const endereco = await this.repository.findAll();
+        return endereco.map((rep) => this.toEnderecoResponseDto(rep));
+    }
 
     private toEnderecoResponseDto({
         id,

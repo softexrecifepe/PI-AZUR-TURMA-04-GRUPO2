@@ -54,6 +54,13 @@ export class VendedorRepository {
     async remove(id: string) {
         return this.dataSource.getRepository(Vendedor).delete(id);
     }
+
+    async findById(id: string) {
+        return this.dataSource.getRepository(Vendedor).findOne({
+            where: { id },
+            relations: ["socio", "socio.endereco", "endereco"],
+        });
+    }
 }
 
 

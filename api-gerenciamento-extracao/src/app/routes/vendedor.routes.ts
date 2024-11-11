@@ -17,5 +17,8 @@ vendedorRoutes.get('/vendedor/:id', ((req: Request, res: Response, next: NextFun
 vendedorRoutes.delete('/vendedor/:id', ((req: Request, res: Response, next: NextFunction) => {
     authenticateJWT(req, res, next)
 }), vendedorController.remove.bind(vendedorController));
+vendedorRoutes.get('/vendedor', ((req: Request, res: Response, next: NextFunction) => {
+    authenticateJWT(req, res, next)
+}), vendedorController.findAll.bind(vendedorController));
 
 export default vendedorRoutes;

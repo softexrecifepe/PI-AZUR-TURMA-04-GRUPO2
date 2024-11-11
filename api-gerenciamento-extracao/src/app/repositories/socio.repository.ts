@@ -54,4 +54,11 @@ export class SocioRepository {
     async remove(id: string) {
         return this.dataSource.getRepository(Socio).delete(id);
     }
+
+    async findById(id: string) {
+        return this.dataSource.getRepository(Socio).findOne({
+            where: { id },
+            relations: ['endereco'],
+        });
+    }
 }

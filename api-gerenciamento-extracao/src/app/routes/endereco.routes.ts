@@ -18,6 +18,8 @@ enderecoRoutes.get('/endereco/:id', ((req: Request, res: Response, next: NextFun
 enderecoRoutes.delete('/endereco/:id', ((req: Request, res: Response, next: NextFunction) => {
     authenticateJWT(req, res, next)
 }), enderecoController.remove.bind(enderecoController));
-
+enderecoRoutes.get('/endereco', ((req: Request, res: Response, next: NextFunction) => {
+    authenticateJWT(req, res, next)
+}), enderecoController.findAll.bind(enderecoController));
 
 export default enderecoRoutes;

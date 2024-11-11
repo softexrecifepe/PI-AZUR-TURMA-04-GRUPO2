@@ -32,5 +32,10 @@ export class EnderecoController extends BaseController<EnderecoService> {
         const id = req.params.id;
         return this.handleRequest(req, res, next, async () => this.service.remove(id), "Representante removido com sucesso", 200);
     } 
+
+    async findAll(req: Request, res: Response, next: NextFunction) {
+        return this.handleRequest(req, res, next, async () => this.service.findAll(), "Esses são todos os representantes");
+ 
+    }
      
 }

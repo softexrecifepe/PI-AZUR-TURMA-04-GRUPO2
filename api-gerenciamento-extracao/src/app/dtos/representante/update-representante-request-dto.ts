@@ -19,8 +19,8 @@ const updateRepresentanteSchema = z.object({
     cpf: z.string().regex(/^\d{11}$/, "CPF deve conter exatamente 11 dígitos").optional(),
     estadoCivil: z.nativeEnum(EstadoCivil, { errorMap: () => ({ message: "Estado civil inválido" }) }).optional(),
     nome_mae: z.string().min(1, "Nome da mãe é obrigatório").max(255, "Nome da mãe pode ter no máximo 255 caracteres").optional(),
-    orgaoExpedidor: z.string().min(3, "Precisa ter 3").max(100, "O máximo é 100"),
-    regimeComunhao: z.string().min(3, "Precisa ter 3").max(100, "O máximo é 100"),
+    orgaoExpedidor: z.string().min(3, "Precisa ter 3").max(100, "O máximo é 100").optional(),
+    regimeComunhao: z.string().min(3, "Precisa ter 3").max(100, "O máximo é 100").optional(),
     nome_pai: z.string().max(255, "Nome do pai pode ter no máximo 255 caracteres").optional(),
     enderecoId: z.string().uuid("O ID do imóvel deve ser um UUID válido").optional(),
 });

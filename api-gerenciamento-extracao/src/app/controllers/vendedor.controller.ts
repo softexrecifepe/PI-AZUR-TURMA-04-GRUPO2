@@ -37,4 +37,9 @@ export class VendedorController extends BaseController<VendedorService> {
         }, "Vendedor removido com sucesso", 200);
     }
 
+    async findAll(req: Request, res: Response, next: NextFunction) {
+        return this.handleRequest(req, res, next, async () => this.service.findAll(), "");
+ 
+    }
+
 }

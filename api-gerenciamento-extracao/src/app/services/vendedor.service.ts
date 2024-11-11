@@ -23,7 +23,7 @@ export class VendedorService{
         if (!endereco) throw new NotFoundError("Endereço não encontrado")
 
         const socioRepository = new SocioRepository();
-        const socio = await socioRepository.findOne(data.socioId)
+        const socio = await socioRepository.findById(data.socioId)
 
         if (!socio) throw new NotFoundError("Socio não encontrado")
 
@@ -56,7 +56,7 @@ export class VendedorService{
 
         if (data.socioId) {
             const socioRepository = new SocioRepository();
-            const socio = await socioRepository.findOne(data.socioId);
+            const socio = await socioRepository.findById(data.socioId);
 
             if (!socio) throw new NotFoundError("Sócio não encontrado");
             vendedor.socio = socio;
@@ -73,7 +73,7 @@ export class VendedorService{
     }
 
     async findOne(id: string){
-        const vendedor = await this.repository.findOne(id);
+        const vendedor = await this.repository.findById(id);
         if (!vendedor) throw new NotFoundError(`Vendedor com o ID ${id} não encontrado`);
         return this.toVendedorResponseDto(vendedor);
     }
@@ -82,6 +82,12 @@ export class VendedorService{
         const vendedor = await this.repository.findOne(id);
         if (!vendedor) throw new NotFoundError(`Vendedor com o ID ${id} não encontrado`);
         await this.repository.remove(id);
+    }
+
+    
+    async findAll() {
+        const vendedor = await this.repository.findAll();
+        return vendedor.map((rep) => this.toVendedorResponseDto(rep));
     }
 
     private toVendedorResponseDto(vendedor: Vendedor): ImobiliariaResponseDto{

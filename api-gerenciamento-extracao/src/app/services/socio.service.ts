@@ -74,7 +74,7 @@ export class SocioService {
     }
 
     async findOne(id: string) {
-        const socio = await this.repository.findOne(id);
+        const socio = await this.repository.findById(id);
         if (!socio) throw new NotFoundError(`Sócio com ID ${id} não encontrado`);
         return this.toSocioResponseDto(socio);
     }

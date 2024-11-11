@@ -4,6 +4,7 @@ import { UpdateCredoraRequestDto } from "../dtos/credora/update-credora-request-
 import { NotFoundError } from "../errors/not-found.error";
 import { Credora } from "../models/credora.model";
 import { CredoraRepository } from "../repositories/credora.repository";
+import { EnderecoRepository } from "../repositories/endereco.repository";
 import { RepresentanteRepository } from "../repositories/representante.repository";
 
 
@@ -21,11 +22,17 @@ export class CredoraService {
         const representante = await representanteRepository.findOne(data.representanteId);
         if (!representante) throw new NotFoundError('Representante não encontrado');
 
+        const enderecoRepository = new EnderecoRepository();
+        const endereco = await enderecoRepository.findOne(data.enderecoId)
+
+        if (!endereco) throw new NotFoundError("Endereço não encontrado")
+
         const credora = new Credora();
         credora.nomeCredora = data.nomeCredora;
         credora.nomeDoravante = data.nomeDoravante;
         credora.cnpj = data.cnpj;
         credora.representante = representante; 
+        credora.endereco = endereco;
 
         const savedCredora = await this.repository.create(credora);
         return this.toCredoraResponseDto(savedCredora);
@@ -41,7 +48,13 @@ export class CredoraService {
             const representante = await representanteRepository.findOne(data.representanteId);
             if (!representante) throw new NotFoundError('Representante não encontrado');
             credora.representante = representante;
+        }
 
+        if(data.enderecoId){
+            const enderecoRepository = new EnderecoRepository();
+            const endereco = await enderecoRepository.findOne(data.enderecoId);
+            if (!endereco) throw new NotFoundError('Endereço não encontrado');
+            credora.endereco = endereco;
         }
 
         credora.nomeCredora = data.nomeCredora ?? credora.nomeCredora;
@@ -78,8 +91,9 @@ export class CredoraService {
         nomeDoravante,
         cnpj,
         representante,
+        endereco
     }: Credora): CredoraResponseDto {
-        return { id, created_at, nomeCredora, nomeDoravante, cnpj, representante}
+        return { id, created_at, nomeCredora, nomeDoravante, cnpj, representante, endereco}
     }
 
 }

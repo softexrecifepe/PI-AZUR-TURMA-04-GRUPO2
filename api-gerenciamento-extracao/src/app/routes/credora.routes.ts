@@ -12,6 +12,12 @@ credoraRoutes.post('/credora', ((req: Request, res: Response, next: NextFunction
 credoraRoutes.patch('/credora/:id', ((req: Request, res: Response, next: NextFunction) => {
     authenticateJWT(req, res, next)
 }), credoraController.update.bind(credoraController));
+credoraRoutes.get('/credora/:id', ((req: Request, res: Response, next: NextFunction) => {
+    authenticateJWT(req, res, next)
+}), credoraController.findOne.bind(credoraController));
+credoraRoutes.delete('/credora/:id', ((req: Request, res: Response, next: NextFunction) => {
+    authenticateJWT(req, res, next)
+}), credoraController.remove.bind(credoraController));
 
 export default credoraRoutes;
 

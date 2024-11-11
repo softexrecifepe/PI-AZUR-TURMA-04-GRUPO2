@@ -11,8 +11,10 @@ const createCompradorSchema = z.object({
     .min(3, "Nacionalidade é obrigatória e deve ter no mínimo 3 caracteres")
     .max(255, "Nacionalidade pode ter no máximo 255 caracteres"),
 
-  dataNascimento: z.date()
-    .refine(date => date <= new Date(), "Data de nascimento deve ser uma data no passado"),
+  dataNascimento: z.string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Data de nascimento deve estar no formato YYYY-MM-DD")
+    .transform((str) => new Date(str))
+    .refine((date) => date <= new Date(), "Data de nascimento não pode ser no futuro"),
 
   profissao: z.string()
     .min(3, "Profissão é obrigatória e deve ter no mínimo 3 caracteres")
@@ -33,10 +35,12 @@ const createCompradorSchema = z.object({
     .min(2, "Órgão Expedidor é obrigatório e deve ter no mínimo 2 caracteres")
     .max(50, "Órgão Expedidor pode ter no máximo 50 caracteres"),
 
-  regimeComunhao: z.string().min(3, "Precisa ter 3").max(100, "O máximo é 100"),
+  regimeComunhao: z.string().min(3, "Precisa ter 3").max(100, "O máximo é 100").optional(),
 
-  dataExpedicao: z.date()
-    .refine(date => date <= new Date(), "Data de expedição deve ser uma data no passado"),
+  dataExpedicao:  z.string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "Data de expedição deve estar no formato YYYY-MM-DD")
+  .transform((str) => new Date(str))
+  .refine((date) => date <= new Date(), "Data de expedição não pode ser no futuro"),
 
   cpf: z.string()
     .regex(/^\d{11}$/, "CPF deve conter 11 dígitos numéricos"),
