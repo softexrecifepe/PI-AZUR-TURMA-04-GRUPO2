@@ -4,7 +4,7 @@ import { AppDataSource } from '../../database/data-source';
 import app from './app';
 dotenv.config();
 
-const PORT = parseInt(`${process.env.PORT_EXTRACAO || 3000}`);
+const PORT = parseInt(`${process.env.PORT_GERENCIAMENTO || 3002}`);
 
 AppDataSource.initialize().then(async () => {
     console.log('Database ok');

@@ -68,8 +68,8 @@ export class VendedorService{
         vendedor.email = data.email ?? vendedor.email;
         vendedor.numNire = data.numNire ?? vendedor.numNire;
 
-        const vendedrUpdate = await this.repository.update(id, vendedor);
-        return this.toVendedorResponseDto(vendedrUpdate);
+        const vendedorUpdate = await this.repository.update(id, vendedor);
+        return this.toVendedorResponseDto(vendedorUpdate);
     }
 
     async findOne(id: string){

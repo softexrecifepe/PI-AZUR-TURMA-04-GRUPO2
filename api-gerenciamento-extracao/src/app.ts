@@ -28,17 +28,17 @@ app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-app.use('/api', socioRoutes);
-app.use('/api', representanteRoutes);
-app.use('/api', enderecoRoutes);
-app.use('/api', imovelRoutes);
-app.use('/api', vendedorRoutes);
-app.use('/api', incorporadoraRoutes);
-app.use('/api', empreendedorFiadorRoutes);
-app.use('/api', credoraRoutes);
-app.use('/api', construtoraFiadoraRoutes);
-app.use('/api', compradorRoutes);
-app.use('/api', aquisicaoImovelRoutes);
+app.use('/api/extracao', socioRoutes);
+app.use('/api/extracao', representanteRoutes);
+app.use('/api/extracao', enderecoRoutes);
+app.use('/api/extracao', imovelRoutes);
+app.use('/api/extracao', vendedorRoutes);
+app.use('/api/extracao', incorporadoraRoutes);
+app.use('/api/extracao', empreendedorFiadorRoutes);
+app.use('/api/extracao', credoraRoutes);
+app.use('/api/extracao', construtoraFiadoraRoutes);
+app.use('/api/extracao', compradorRoutes);
+app.use('/api/extracao', aquisicaoImovelRoutes);
 
 
 app.get("terms", (req: Request, res: Response) => {

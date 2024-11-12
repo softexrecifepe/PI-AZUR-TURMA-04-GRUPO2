@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { AppDataSource } from "../../database/data-source";
+import { AppDataSource } from "../../../../database/data-source";
 import { Comprador } from "../models/comprador.model";
 
 export class CompradorRepository {
