@@ -8,6 +8,7 @@ import socioRoutes from './app/routes/socio.routes';
 import enderecoRoutes from './app/routes/endereco.routes';
 import vendedorRoutes from './app/routes/vendedor.routes';
 import compradorRoutes from './app/routes/comprador.routes';
+import pdfRoutes from './app/routes/pdf.routes';
  
 const app = express();
  
@@ -20,6 +21,7 @@ app.use('/api/gerenciamento', socioRoutes);
 app.use('/api/gerenciamento', enderecoRoutes);
 app.use('/api/gerenciamento', vendedorRoutes);
 app.use('/api/gerenciamento', compradorRoutes);
+app.use('/api/pdf', pdfRoutes);
 
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
