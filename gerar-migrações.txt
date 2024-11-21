@@ -1,0 +1,11 @@
+Gerar a migração:
+Execute o comando abaixo para gerar a migração baseada nas alterações no seu modelo, criando um arquivo de migração no diretório definido para migrações. Esse comando criará uma nova migração com base nas entidades e alterações detectadas no seu modelo de dados.
+`npm run typeorm migration:generate -- -d ./database/data-source.ts ./database/migrations/NomeDaMigration`
+
+
+Rodar a migração:
+Depois de gerar a migração, execute-a para aplicar as alterações ao banco de dados:
+`npm run typeorm migration:run -- -d ./database/data-source.ts` 
+
+
+
