@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { AppDataSource } from "../../../../database/data-source";
+import { AppDataSource } from "../../../database/data-source";
 import { Imovel } from "../models/imovel.model";
 
 export class ImovelRepository {
